@@ -4,7 +4,7 @@ import {User} from "../entities/user";
 import {InjectRepository} from "@nestjs/typeorm";
 import {CreateUserDto} from "../dtos/create-user-dto";
 import * as bcrypt from 'bcrypt';
-import {TokenService} from "../../auth/token/token.service";
+import {TokenService} from "../../token/token/token.service";
 
 @Injectable()
 export class UsersService {
@@ -16,16 +16,18 @@ export class UsersService {
         return this.usersRepository.find();
     }
 
-    getByEmail(email: string) {
-        return this.usersRepository.findOneBy({
+    async getByEmail(email: string) {
+        let {password, ...user} = await this.usersRepository.findOneBy({
             email: email
-        });
+        })
+        return user;
     }
 
-    getById(id: number) {
-        return this.usersRepository.findOneBy({
+    async getById(id: number) {
+        let {password, ...user} = await this.usersRepository.findOneBy({
             id: id
-        });
+        })
+        return user;
     }
 
     async create(userCreateDto: CreateUserDto) {

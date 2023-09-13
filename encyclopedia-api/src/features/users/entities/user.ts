@@ -1,5 +1,4 @@
-import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique} from "typeorm";
-import {History} from "../../history/entities/history";
+import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique} from "typeorm";
 
 @Entity()
 @Unique(['email'])
@@ -21,7 +20,4 @@ export class User {
 
     @CreateDateColumn()
     registeredAt: Date;
-
-    @OneToMany(() => History, (history) => history.user)
-    histories: History[];
 }

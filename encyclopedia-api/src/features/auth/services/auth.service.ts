@@ -3,15 +3,21 @@ import {LoginUserDto} from "../dtos/login-user-dto";
 import {UsersService} from "../../users/services/users.service";
 import * as bcrypt from 'bcrypt';
 import {CreateUserDto} from "../../users/dtos/create-user-dto";
-import {TokenService} from "../token/token.service";
+import {TokenService} from "../../token/token/token.service";
+import {InjectRepository} from "@nestjs/typeorm";
+import {User} from "../../users/entities/user";
+import {Repository} from "typeorm";
 
 @Injectable()
 export class AuthService {
     constructor(private readonly usersService: UsersService,
-                private readonly tokenService: TokenService) {
+                private readonly tokenService: TokenService,
+                @InjectRepository(User) private readonly usersRepository: Repository<User>) {
     }
     async login(loginUserDto: LoginUserDto) {
-        let user= await this.usersService.getByEmail(loginUserDto.email);
+        let user= await this.usersRepository.findOneBy({
+            email: loginUserDto.email
+        });
         if (!user || !(await bcrypt.compare(loginUserDto.password, user.password))) {
             throw new UnauthorizedException();
         }

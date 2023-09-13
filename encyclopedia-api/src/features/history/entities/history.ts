@@ -1,5 +1,4 @@
-import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {User} from "../../users/entities/user";
+import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from "typeorm";
 import {ActionTypes} from "../constants/action-types";
 
 @Entity()
@@ -24,9 +23,8 @@ export class History {
     })
     previousArticleId: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     nextArticleId: string;
-
-    @ManyToOne(() => User, (user) => user.histories)
-    user: User;
 }
