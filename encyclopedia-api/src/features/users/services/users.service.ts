@@ -5,65 +5,32 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {CreateUserDto} from "../dtos/create-user.dto";
 import * as bcrypt from 'bcrypt';
 import {TokenService} from "../../token/token/token.service";
-import {History} from "../../history/entities/history";
 
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>,
-                @InjectRepository(History) private readonly historyRepository: Repository<History>,
                 private readonly tokenService: TokenService) {
     }
 
-    getAll() {
-        return this.usersRepository.find();
-    }
-
-    async getByEmail(email: string) {
-        return await this.usersRepository.findOne({
-            where: {
-                email: email
-            },
-            select: {
-                id: true,
-                email: true,
-                firstName: true,
-                lastName: true,
-                registeredAt: true
-            }
-        });
-    }
-
-    async getById(id: number) {
-        return await this.usersRepository.findOne({
-            where: {
-                id: id
-            },
-            select: {
-                id: true,
-                email: true,
-                firstName: true,
-                lastName: true,
-                registeredAt: true
-            }
-        });
-    }
-
     async getLeaderboard() {
-        return Promise.all((await this.usersRepository.find({
+        return (await this.usersRepository.find({
             select: {
                 id: true,
                 email: true,
                 firstName: true,
                 lastName: true,
                 registeredAt: true
+            },
+            relations: {
+                histories: true
             }
-        })).map(async el => ({
-            ...el, score: await this.historyRepository.count({
-                where: {
-                    userId: el.id
-                }
-            })
-        })));
+        })).map(({...el}) => {
+            let historiesNumber = el.histories.length;
+            delete el.histories;
+            return {...el, historiesNumber: historiesNumber};
+        }).sort((a, b) => {
+            return b.historiesNumber - a.historiesNumber;
+        })
     }
 
     async create(userCreateDto: CreateUserDto) {

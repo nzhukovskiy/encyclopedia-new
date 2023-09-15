@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post, Put, Request} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, Request} from '@nestjs/common';
 import {ArticlesService} from "../services/articles.service";
 import {CreateArticleDto} from "../dtos/create-article.dto";
 import {HistoryService} from "../../history/services/history.service";
@@ -35,5 +35,10 @@ export class ArticlesController {
     @Put(':id')
     update(@Request() request, @Body() updateArticleDto: UpdateArticleDto, @Param('id') id: string) {
         return this.articlesService.update(updateArticleDto, request.user.id, id);
+    }
+
+    @Delete(':id')
+    delete(@Param('id') id: string) {
+        return this.articlesService.delete(id);
     }
 }

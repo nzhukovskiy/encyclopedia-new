@@ -7,9 +7,10 @@ import {UsersModule} from "../users/users.module";
 import {ArchivedArticlesModule} from "../archived-articles/archived-articles.module";
 import {Article, ArticleSchema} from "../articles/schemas/article";
 import {MongooseModule} from "@nestjs/mongoose";
+import {User} from "../users/entities/user";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([History, Article]),
+  imports: [TypeOrmModule.forFeature([History, Article, User]),
   UsersModule,
   ArchivedArticlesModule,
     MongooseModule.forFeature([

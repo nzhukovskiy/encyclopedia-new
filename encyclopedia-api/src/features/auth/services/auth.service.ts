@@ -15,8 +15,13 @@ export class AuthService {
                 @InjectRepository(User) private readonly usersRepository: Repository<User>) {
     }
     async login(loginUserDto: LoginUserDto) {
-        let user= await this.usersRepository.findOneBy({
-            email: loginUserDto.email
+        let user= await this.usersRepository.findOne({
+            where: {
+                email: loginUserDto.email
+            },
+            select: {
+                password: true
+            }
         });
         if (!user || !(await bcrypt.compare(loginUserDto.password, user.password))) {
             throw new UnauthorizedException();
