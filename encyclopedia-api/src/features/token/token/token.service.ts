@@ -8,7 +8,7 @@ export class TokenService {
 
     async generateToken(payload: any) {
         return {
-            access_token: await this.jwtService.signAsync(payload),
+            access_token: await this.jwtService.signAsync(payload, {expiresIn: '10d'}),
         };
     }
 }

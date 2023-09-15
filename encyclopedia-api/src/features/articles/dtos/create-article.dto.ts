@@ -1,5 +1,5 @@
 import {IsNotEmpty, IsOptional, IsString, ValidateNested} from "class-validator";
-import {PlaceAndDateDto} from "./auxiliary-objects/place-and-date-dto";
+import {PlaceAndDateDto} from "./auxiliary-objects/place-and-date.dto";
 import {Type} from "class-transformer";
 
 export class CreateArticleDto {

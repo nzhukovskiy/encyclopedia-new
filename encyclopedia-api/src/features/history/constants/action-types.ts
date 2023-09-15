@@ -1,5 +1,6 @@
 export enum ActionTypes {
     Creation,
     Updating,
-    Deleting
+    Deleting,
+    Restoring
 }

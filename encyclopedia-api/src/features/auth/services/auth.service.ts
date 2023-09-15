@@ -1,8 +1,8 @@
 import {Injectable, UnauthorizedException} from '@nestjs/common';
-import {LoginUserDto} from "../dtos/login-user-dto";
+import {LoginUserDto} from "../dtos/login-user.dto";
 import {UsersService} from "../../users/services/users.service";
 import * as bcrypt from 'bcrypt';
-import {CreateUserDto} from "../../users/dtos/create-user-dto";
+import {CreateUserDto} from "../../users/dtos/create-user.dto";
 import {TokenService} from "../../token/token/token.service";
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "../../users/entities/user";

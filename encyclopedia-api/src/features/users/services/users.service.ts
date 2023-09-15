@@ -2,13 +2,15 @@ import {Injectable} from '@nestjs/common';
 import {Repository} from "typeorm";
 import {User} from "../entities/user";
 import {InjectRepository} from "@nestjs/typeorm";
-import {CreateUserDto} from "../dtos/create-user-dto";
+import {CreateUserDto} from "../dtos/create-user.dto";
 import * as bcrypt from 'bcrypt';
 import {TokenService} from "../../token/token/token.service";
+import {History} from "../../history/entities/history";
 
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>,
+                @InjectRepository(History) private readonly historyRepository: Repository<History>,
                 private readonly tokenService: TokenService) {
     }
 
@@ -17,17 +19,51 @@ export class UsersService {
     }
 
     async getByEmail(email: string) {
-        let {password, ...user} = await this.usersRepository.findOneBy({
-            email: email
-        })
-        return user;
+        return await this.usersRepository.findOne({
+            where: {
+                email: email
+            },
+            select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+                registeredAt: true
+            }
+        });
     }
 
     async getById(id: number) {
-        let {password, ...user} = await this.usersRepository.findOneBy({
-            id: id
-        })
-        return user;
+        return await this.usersRepository.findOne({
+            where: {
+                id: id
+            },
+            select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+                registeredAt: true
+            }
+        });
+    }
+
+    async getLeaderboard() {
+        return Promise.all((await this.usersRepository.find({
+            select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+                registeredAt: true
+            }
+        })).map(async el => ({
+            ...el, score: await this.historyRepository.count({
+                where: {
+                    userId: el.id
+                }
+            })
+        })));
     }
 
     async create(userCreateDto: CreateUserDto) {

@@ -2,7 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {History} from "../entities/history";
-import {HistoryCreateDto} from "../dtos/history-create-dto";
+import {HistoryCreateDto} from "../dtos/history-create.dto";
 import {ArchivedArticlesService} from "../../archived-articles/services/archived-articles.service";
 import {UsersService} from "../../users/services/users.service";
 import {Article} from "../../articles/schemas/article";

@@ -13,6 +13,7 @@ import { HistoryModule } from './features/history/history.module';
 import {History} from "./features/history/entities/history";
 import { ArchivedArticlesModule } from './features/archived-articles/archived-articles.module';
 import { TokenModule } from './features/token/token.module';
+import { ArticleUpdateModule } from './features/article-update/article-update.module';
 
 @Module({
   imports: [
@@ -41,7 +42,8 @@ import { TokenModule } from './features/token/token.module';
     ArticlesModule,
     HistoryModule,
     ArchivedArticlesModule,
-    TokenModule
+    TokenModule,
+    ArticleUpdateModule
   ],
   controllers: [AppController],
   providers: [AppService, TokenService],
