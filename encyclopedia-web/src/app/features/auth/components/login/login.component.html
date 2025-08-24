@@ -1,1 +1,11 @@
-<p>login works!</p>
+<form [formGroup]="loginFormGroup">
+    <div>
+        <label for="email">Адрес электронной почты</label>
+        <input id="email" type="email" formControlName="email">
+    </div>
+    <div>
+        <label for="password">Пароль</label>
+        <input id="password" type="password" formControlName="password">
+    </div>
+    <button type="submit" (click)="login()">Войти</button>
+</form>

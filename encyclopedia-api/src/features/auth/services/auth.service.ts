@@ -19,16 +19,13 @@ export class AuthService {
             where: {
                 email: loginUserDto.email
             },
-            select: {
-                password: true
-            }
+            select: ['password', "id", "email", "firstName", "lastName", "registeredAt"]
         });
         if (!user || !(await bcrypt.compare(loginUserDto.password, user.password))) {
             throw new UnauthorizedException();
         }
-        return this.tokenService.generateToken(
-            {id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email}
-        );
+        delete user.password
+        return this.tokenService.generateToken(JSON.parse(JSON.stringify(user)));
     }
 
     register(createUserDto: CreateUserDto) {

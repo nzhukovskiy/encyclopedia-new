@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {LoginUserDto} from '../../../features/auth/dtos/login-user.dto';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthApiService {
 
-  constructor(private readonly httpClient: HttpClient) {
+    constructor(private readonly httpClient: HttpClient) {
 
-  }
+    }
 
-  login() {
-      return this.httpClient.post("auth/login", {});
-  }
+    login(loginUserDto: LoginUserDto) {
+        return this.httpClient.post<{accessToken: string}>("auth/login", loginUserDto);
+    }
 }
