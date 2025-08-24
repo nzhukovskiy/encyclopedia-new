@@ -11,6 +11,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {History} from "../../history/entities/history";
 import {Repository} from "typeorm";
 import {User} from "../../users/entities/user";
+import {CollectionDto, DocumentCollector} from "@forlagshuset/nestjs-mongoose-paginate";
 
 @Injectable()
 export class ArticlesService {
@@ -20,8 +21,10 @@ export class ArticlesService {
                 @InjectRepository(User) private readonly userRepository: Repository<User>,
                 private readonly articleUpdateService: ArticleUpdateService) {
     }
-    getAll() {
-        return this.articleModel.find();
+    getAll(collectionDto: CollectionDto) {
+        const collector = new DocumentCollector<Article>(this.articleModel);
+        return collector.find(collectionDto);
+        // return this.articleModel.find();
     }
 
     async get(articleId: string) {

@@ -1,9 +1,15 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Request} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, Query, Request} from '@nestjs/common';
 import {ArticlesService} from "../services/articles.service";
 import {CreateArticleDto} from "../dtos/create-article.dto";
 import {HistoryService} from "../../history/services/history.service";
 import {UpdateArticleDto} from "../dtos/update-article.dto";
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
+import {
+    CollectionDto,
+    ValidationPipe,
+    CollectionResponse
+} from '@forlagshuset/nestjs-mongoose-paginate';
+import {ArticlePaginationProperties} from "../pagination/article-pagination-properties";
 
 @ApiTags('articles')
 @ApiBearerAuth()
@@ -13,8 +19,9 @@ export class ArticlesController {
                 private readonly historyService: HistoryService) {
     }
     @Get()
-    getAll() {
-        return this.articlesService.getAll();
+    getAll(@Query(new ValidationPipe(ArticlePaginationProperties))
+               collectionDto: CollectionDto,) {
+        return this.articlesService.getAll(collectionDto);
     }
 
     @Get(':id')
