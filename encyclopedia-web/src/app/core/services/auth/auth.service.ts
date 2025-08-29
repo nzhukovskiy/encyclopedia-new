@@ -5,6 +5,7 @@ import {AuthApiService} from './auth-api.service';
 import {TokenStorageService} from '../token/token-storage.service';
 import {LoginUserDto} from '../../../features/auth/dtos/login-user.dto';
 import {jwtDecode} from 'jwt-decode';
+import {RegisterUserDto} from '../../../features/auth/dtos/register-user.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -30,13 +31,22 @@ export class AuthService {
         );
     }
 
+    register(registerUserDto: RegisterUserDto) {
+        if (this.$currentUser.value) {
+            this.logout();
+        }
+        return this.authApiService.register(registerUserDto).pipe(tap(tokenData => {
+            this.tokenStorageService.setToken(tokenData.accessToken);
+            this.loadUserFromTokenStorage();
+        }))
+    }
 
     logout() {
         this.tokenStorageService.removeToken();
         this.$currentUser.next(null);
     }
 
-    loadUserFromTokenStorage() {
+    private loadUserFromTokenStorage() {
         const token = this.tokenStorageService.getToken();
         if (token) {
             this.$currentUser.next(jwtDecode(token));

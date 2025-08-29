@@ -13,14 +13,11 @@ export class LoginComponent {
     @Output() loginEvent = new EventEmitter<LoginUserDto>();
 
     loginFormGroup = new FormGroup({
-        email: new FormControl(""),
-        password: new FormControl("")
+        email: new FormControl("", {nonNullable: true}),
+        password: new FormControl("", {nonNullable: true})
     })
 
     login() {
-        this.loginEvent.emit({
-            email: this.loginFormGroup.controls.email.value!,
-            password: this.loginFormGroup.controls.password.value!
-        })
+        this.loginEvent.emit(this.loginFormGroup.getRawValue())
     }
 }

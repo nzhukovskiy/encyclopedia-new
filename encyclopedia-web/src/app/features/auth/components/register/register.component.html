@@ -1,1 +1,19 @@
-<p>register works!</p>
+<form [formGroup]="registerFormGroup">
+    <div>
+        <label for="email">Адрес электронной почты</label>
+        <input id="email" type="email" formControlName="email">
+    </div>
+    <div>
+        <label for="password">Пароль</label>
+        <input id="password" type="password" formControlName="password">
+    </div>
+    <div>
+        <label for="firstName">Имя</label>
+        <input id="firstName" type="text" formControlName="firstName">
+    </div>
+    <div>
+        <label for="lastName">Фамилия</label>
+        <input id="lastName" type="text" formControlName="lastName">
+    </div>
+    <button type="submit" (click)="register()">Зарегистрироваться</button>
+</form>
