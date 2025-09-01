@@ -1,5 +1,6 @@
 <p>all-articles works!</p>
 @for (article of (articles$ | async); track article.title) {
+    <div>{{article._id}}</div>
     <div>{{article.title}}</div>
 }
 <!--<div *ngFor="let article of (articles$ | async)">-->

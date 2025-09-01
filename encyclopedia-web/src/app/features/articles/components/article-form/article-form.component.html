@@ -1,0 +1,74 @@
+<p>article-form works!</p>
+<form [formGroup]="articleFormGroup" (ngSubmit)="createArticle()">
+    <div>
+        <label for="title">Название</label>
+        <input id="title" type="text" formControlName="title">
+    </div>
+    <div>
+        <label for="body">Текст статьи</label>
+        <textarea id="body" formControlName="body"></textarea>
+    </div>
+    <form [formGroup]="articleFormGroup.controls.birth">
+        <div>
+            <label for="birthDate">Дата рождения</label>
+            <input id="birthDate" type="date" formControlName="date">
+        </div>
+        <form [formGroup]="articleFormGroup.controls.birth.controls.place">
+            <div>
+                <label for="birthPlace">Место рождения</label>
+                <input id="birthPlace" type="text" formControlName="place">
+            </div>
+            <div>
+                <label for="birthCountry">Страна рождения</label>
+                <input id="birthCountry" type="text" formControlName="country">
+            </div>
+        </form>
+    </form>
+    
+    <form [formGroup]="articleFormGroup.controls.death">
+        <div>
+            <label for="deathDate">Дата смерти</label>
+            <input id="deathDate" type="date" formControlName="date">
+        </div>
+        <form [formGroup]="articleFormGroup.controls.death.controls.place">
+            <div>
+                <label for="deathPlace">Место смерти</label>
+                <input id="deathPlace" type="text" formControlName="place">
+            </div>
+            <div>
+                <label for="deathCountry">Страна смерти</label>
+                <input id="deathCountry" type="text" formControlName="country">
+            </div>
+        </form>
+        
+    </form>
+    
+    <!-- <div>
+        <label for="birthDate">Дата смерти</label>
+        <input id="deathDate" type="date" formControlName="deathDate">
+    </div>
+    <div>
+        <label for="deathPlace">Место смерти</label>
+        <input id="deathPlace" type="text" formControlName="deathPlace">
+    </div>
+    <div>
+        <label for="deathCountry">Страна смерти</label>
+        <input id="deathCountry" type="text" formControlName="deathCountry">
+    </div> -->
+    @for (resourceControl of resources; track $index) {
+        <form [formGroup]="resourceControl">
+            <div>
+                <label >Название параметра</label>
+                <input type="text" formControlName="key">
+            </div>
+            <div>
+                <label >Значение параметра</label>
+                <input type="text" formControlName="value">
+            </div>
+            <button (click)="removeResource($index)" type="button">Удалить это поле</button>
+        </form>
+    }
+    <button (click)="addResource()" type="button">Добавить новое поле</button>
+
+    <button type="submit">Создать статью</button>
+</form>
