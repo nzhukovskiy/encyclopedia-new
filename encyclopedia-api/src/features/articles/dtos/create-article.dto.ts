@@ -25,23 +25,17 @@ export class CreateArticleDto {
     death: PlaceAndDateDto;
 
     @ValidateNested({each: true})
-    @IsOptional()
     @IsArray()
-    @ArrayNotEmpty()
     @Type(()=>ResourceDto)
     resources: ResourceDto;
 
     @ValidateNested({each: true})
-    @IsOptional()
     @IsArray()
-    @ArrayNotEmpty()
     @Type(()=>AppointmentDto)
     appointments: AppointmentDto;
 
     @ValidateNested({each: true})
-    @IsOptional()
     @IsArray()
-    @ArrayNotEmpty()
     @Type(()=>SectionDto)
     sections: SectionDto;
 }
