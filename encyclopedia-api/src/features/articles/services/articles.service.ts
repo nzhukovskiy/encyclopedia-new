@@ -28,9 +28,13 @@ export class ArticlesService {
     }
 
     async get(articleId: string) {
-        return this.articleModel.findOne({
-            _id: articleId
-        }, {
+        let model = await this.articleModel.findOne(
+            {
+                _id: articleId
+            }
+        ).lean();
+        return {
+            ...model,
             lastHistory: await this.historyRepository.find({
                 where: {
                     articleId: articleId
@@ -43,11 +47,7 @@ export class ArticlesService {
                     user: true
                 }
             }),
-            title: 1,
-            body: 1,
-            birth: 1,
-            death: 1
-        });
+        }
     }
 
     async create(createArticleDto: CreateArticleDto, userId: number) {

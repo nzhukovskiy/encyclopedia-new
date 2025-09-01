@@ -1,7 +1,10 @@
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
 import {PlaceAndDate} from "./place-and-date";
+import {Resource} from "./resource";
+import {Appointment} from "./appointment";
+import {Section} from "./section";
 
-@Schema()
+@Schema({timestamps: true})
 export class Article {
     @Prop()
     title: string;
@@ -14,24 +17,15 @@ export class Article {
 
     @Prop()
     death: PlaceAndDate;
+
+    @Prop()
+    resources: Resource[];
+
+    @Prop()
+    appointments: Appointment[];
+
+    @Prop()
+    sections: Section[];
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
-/*export const ArticleSchema = new mongoose.Schema({
-    title: String,
-    body: String,
-    birth: {
-        place: {
-            country: String,
-            place: String
-        },
-        date: Date
-    },
-    death: {
-        place: {
-            country: String,
-            place: String
-        },
-        date: Date
-    }
-})*/

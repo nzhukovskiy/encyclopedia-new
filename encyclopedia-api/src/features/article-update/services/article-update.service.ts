@@ -43,7 +43,7 @@ export class ArticleUpdateService {
         return this.articleModel.findByIdAndUpdate(currentArticleToBeUpdated._id, updateArticleDto, {
             new: true,
             projection: {
-                lashHistory: newHistory,
+                lastHistory: newHistory,
                 title: 1,
                 body: 1,
                 birth: 1,
