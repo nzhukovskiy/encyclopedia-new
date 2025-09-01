@@ -19,4 +19,8 @@ export class ArticlesApiService {
     create(createArticleDto: CreateArticleDto) {
         return this.httpClient.post<Article>(`articles/new`, createArticleDto);
     }
+
+    getOne(id: string) {
+        return this.httpClient.get<Article>(`articles/${id}`);
+    }
 }

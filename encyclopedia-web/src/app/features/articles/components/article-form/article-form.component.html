@@ -70,5 +70,34 @@
     }
     <button (click)="addResource()" type="button">Добавить новое поле</button>
 
+
+
+    @for (appointment of appointments; track $index) {
+        <form [formGroup]="appointment">
+            <div>
+                <label >Название должности</label>
+                <input type="text" formControlName="title">
+            </div>
+            <div>
+                <label >Начало</label>
+                <input type="date" formControlName="startDate">
+            </div>
+            <div>
+                <label >Окончание</label>
+                <input type="date" formControlName="endDate">
+            </div>
+            <div>
+                <label >Предшественник</label>
+                <input type="text" formControlName="predecessor">
+            </div>
+            <div>
+                <label >Преемник</label>
+                <input type="text" formControlName="successor">
+            </div>
+            <button type="button">Удалить должность</button>
+        </form>
+    }
+    <button type="button">Добавить новую должность</button>
+
     <button type="submit">Создать статью</button>
 </form>

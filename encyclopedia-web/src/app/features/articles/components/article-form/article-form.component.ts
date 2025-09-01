@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormType} from '../../../../core/constants/form-type';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ArticlesApiService} from '../../services/articles-api.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-article-form',
@@ -13,11 +13,12 @@ import {Router} from '@angular/router';
 export class ArticleFormComponent implements OnInit {
 
     constructor(private readonly articlesApiService: ArticlesApiService,
-                private readonly router: Router) {
+                private readonly router: Router,
+                private readonly route: ActivatedRoute) {
 
     }
 
-    formType = FormType.CREATE;
+    formType = FormType.UPDATE;
 
     articleFormGroup = new FormGroup({
         title: new FormControl("", {nonNullable: true}),
@@ -55,22 +56,54 @@ export class ArticleFormComponent implements OnInit {
     })
 
     ngOnInit(): void {
-        if (this.formType === FormType.CREATE) {
-            this.articleFormGroup.controls.resources.push(new FormGroup({
-                key: new FormControl("", {nonNullable: true}),
-                value: new FormControl("", {nonNullable: true})
-            }))
-        }
+        this.route.data.subscribe(({article}) => {
+            if (!article) {
+                this.formType = FormType.CREATE;
+                this.addResource();
+                this.addAppointment();
+                return;
+            }
+            this.articleFormGroup.patchValue(article);
+            for (let resource of article.resources) {
+                this.articleFormGroup.controls.resources.push(new FormGroup({
+                    key: new FormControl(resource.key, {nonNullable: true}),
+                    value: new FormControl(resource.value, {nonNullable: true})
+                }))
+            }
+            for (let appointment of article.appointments) {
+                this.articleFormGroup.controls.appointments.push(new FormGroup({
+                    title: new FormControl(appointment.title, {nonNullable: true}),
+                    startDate: new FormControl(appointment.startDate, {nonNullable: true}),
+                    endDate: new FormControl(appointment.endDate, {nonNullable: true}),
+                    predecessor: new FormControl(appointment.predecessor, {nonNullable: true}),
+                    successor: new FormControl(appointment.successor, {nonNullable: true}),
+                }))
+            }
+        })
     }
 
     get resources() {
         return this.articleFormGroup.controls.resources.controls;
     }
 
+    get appointments() {
+      return this.articleFormGroup.controls.appointments.controls;
+  }
+
     addResource() {
         this.articleFormGroup.controls.resources.push(new FormGroup({
             key: new FormControl("", {nonNullable: true}),
             value: new FormControl("", {nonNullable: true})
+        }))
+    }
+
+    addAppointment() {
+        this.articleFormGroup.controls.appointments.push(new FormGroup({
+            title: new FormControl("", {nonNullable: true}),
+            startDate: new FormControl(new Date(), {nonNullable: true}),
+            endDate: new FormControl(new Date(), {nonNullable: true}),
+            predecessor: new FormControl("", {nonNullable: true}),
+            successor: new FormControl("", {nonNullable: true}),
         }))
     }
 
@@ -80,8 +113,8 @@ export class ArticleFormComponent implements OnInit {
 
     createArticle() {
         console.log(this.articleFormGroup.getRawValue())
-        this.articlesApiService.create(this.articleFormGroup.getRawValue()).subscribe(() => {
-            this.router.navigate([""]).then();
-        })
+        // this.articlesApiService.create(this.articleFormGroup.getRawValue()).subscribe(() => {
+        //     this.router.navigate([""]).then();
+        // })
     }
 }

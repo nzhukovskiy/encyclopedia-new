@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {authGuard} from './core/guards/auth.guard';
+import {articleResolver} from "./features/articles/resolvers/article.resolver";
 
 export const routes: Routes = [
     {
@@ -15,6 +16,12 @@ export const routes: Routes = [
         path: "articles/new",
         loadComponent: () => import('./features/articles/components/article-form/article-form.component').then(c => c.ArticleFormComponent),
         canActivate: [authGuard]
+    },
+    {
+        path: "articles/:id/update",
+        loadComponent: () => import('./features/articles/components/article-form/article-form.component').then(c => c.ArticleFormComponent),
+        canActivate: [authGuard],
+        resolve: {article: articleResolver}
     },
     {
         path: "",
