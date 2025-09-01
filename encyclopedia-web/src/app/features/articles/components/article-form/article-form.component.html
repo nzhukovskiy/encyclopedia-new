@@ -94,10 +94,33 @@
                 <label >Преемник</label>
                 <input type="text" formControlName="successor">
             </div>
-            <button type="button">Удалить должность</button>
+            <button (click)="removeAppointment($index)" type="button">Удалить должность</button>
         </form>
     }
-    <button type="button">Добавить новую должность</button>
+    <button (click)="addAppointment()" type="button">Добавить новую должность</button>
+
+
+
+    @for (section of sections; track $index; let sectionIndex = $index) {
+        <form [formGroup]="section">
+            <div>
+                <label >Название секции</label>
+                <input type="text" formControlName="title">
+            </div>
+            @for (column of section.controls.columns.controls; track $index; let columnIndex = $index) {
+                <form [formGroup]="column">
+                    <div>
+                        <label >Текст колонки</label>
+                        <input type="text" formControlName="text">
+                    </div>
+                </form>
+                <button (click)="removeColumn(sectionIndex, columnIndex)" type="button">Удалить колонку</button>
+            }
+            <button (click)="addColumn(sectionIndex)" type="button">Добавить колонку</button>
+            <button (click)="removeSection(sectionIndex)" type="button">Удалить секцию</button>
+        </form>
+    }
+    <button (click)="addSection()" type="button">Добавить новую секцию</button>
 
     <button type="submit">Создать статью</button>
 </form>

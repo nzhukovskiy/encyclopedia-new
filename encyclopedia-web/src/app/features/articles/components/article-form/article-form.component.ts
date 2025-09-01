@@ -3,6 +3,8 @@ import {FormType} from '../../../../core/constants/form-type';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ArticlesApiService} from '../../services/articles-api.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Resource} from "../../models/resource";
+import {Appointment} from "../../models/appointment";
 
 @Component({
     selector: 'app-article-form',
@@ -37,7 +39,10 @@ export class ArticleFormComponent implements OnInit {
                 place: new FormControl("", {nonNullable: true}),
             })
         }),
-        resources: new FormArray<FormGroup<{ key: FormControl<string>, value: FormControl<string> }>>([]),
+        resources: new FormArray<FormGroup<{
+            key: FormControl<string>,
+            value: FormControl<string>
+        }>>([]),
         appointments: new FormArray<FormGroup<{
             title: FormControl<string>,
             startDate: FormControl<Date>,
@@ -48,7 +53,7 @@ export class ArticleFormComponent implements OnInit {
         sections: new FormArray<FormGroup<{
             title: FormControl<string>,
             columns: FormArray<FormGroup<{
-                order: FormControl<string>,
+                order: FormControl<number>,
                 text: FormControl<string>
             }>>
         }>>([]),
@@ -59,25 +64,14 @@ export class ArticleFormComponent implements OnInit {
         this.route.data.subscribe(({article}) => {
             if (!article) {
                 this.formType = FormType.CREATE;
-                this.addResource();
-                this.addAppointment();
                 return;
             }
             this.articleFormGroup.patchValue(article);
             for (let resource of article.resources) {
-                this.articleFormGroup.controls.resources.push(new FormGroup({
-                    key: new FormControl(resource.key, {nonNullable: true}),
-                    value: new FormControl(resource.value, {nonNullable: true})
-                }))
+                this.addResource(resource);
             }
             for (let appointment of article.appointments) {
-                this.articleFormGroup.controls.appointments.push(new FormGroup({
-                    title: new FormControl(appointment.title, {nonNullable: true}),
-                    startDate: new FormControl(appointment.startDate, {nonNullable: true}),
-                    endDate: new FormControl(appointment.endDate, {nonNullable: true}),
-                    predecessor: new FormControl(appointment.predecessor, {nonNullable: true}),
-                    successor: new FormControl(appointment.successor, {nonNullable: true}),
-                }))
+                this.addAppointment(appointment);
             }
         })
     }
@@ -87,28 +81,63 @@ export class ArticleFormComponent implements OnInit {
     }
 
     get appointments() {
-      return this.articleFormGroup.controls.appointments.controls;
-  }
+        return this.articleFormGroup.controls.appointments.controls;
+    }
 
-    addResource() {
+    get sections() {
+        return this.articleFormGroup.controls.sections.controls;
+    }
+
+    addResource(resource?: Resource) {
         this.articleFormGroup.controls.resources.push(new FormGroup({
-            key: new FormControl("", {nonNullable: true}),
-            value: new FormControl("", {nonNullable: true})
+            key: new FormControl(resource ? resource.key : "", {nonNullable: true}),
+            value: new FormControl(resource ? resource.value : "", {nonNullable: true})
         }))
     }
 
-    addAppointment() {
+    addAppointment(appointment?: Appointment) {
         this.articleFormGroup.controls.appointments.push(new FormGroup({
+            title: new FormControl(appointment ? appointment.title : "", {nonNullable: true}),
+            startDate: new FormControl(appointment ? appointment.startDate : new Date(), {nonNullable: true}),
+            endDate: new FormControl(appointment ? appointment.endDate : new Date(), {nonNullable: true}),
+            predecessor: new FormControl(appointment ? appointment.predecessor : "", {nonNullable: true}),
+            successor: new FormControl(appointment ? appointment.successor : "", {nonNullable: true}),
+        }))
+    }
+
+    addSection() {
+        this.articleFormGroup.controls.sections.push(new FormGroup({
             title: new FormControl("", {nonNullable: true}),
-            startDate: new FormControl(new Date(), {nonNullable: true}),
-            endDate: new FormControl(new Date(), {nonNullable: true}),
-            predecessor: new FormControl("", {nonNullable: true}),
-            successor: new FormControl("", {nonNullable: true}),
+            columns: new FormArray([
+                new FormGroup({
+                    order: new FormControl(0, {nonNullable: true}),
+                    text: new FormControl("", {nonNullable: true})
+                })
+            ])
+        }))
+    }
+
+    addColumn(sectionIndex: number) {
+        this.sections[sectionIndex].controls.columns.push(new FormGroup({
+            order: new FormControl(1, {nonNullable: true}),
+            text: new FormControl("", {nonNullable: true})
         }))
     }
 
     removeResource(index: number) {
         this.articleFormGroup.controls.resources.removeAt(index);
+    }
+
+    removeAppointment(index: number) {
+        this.articleFormGroup.controls.appointments.removeAt(index);
+    }
+
+    removeSection(index: number) {
+        this.articleFormGroup.controls.sections.removeAt(index);
+    }
+
+    removeColumn(sectionIndex: number, columnIndex: number) {
+        this.sections[sectionIndex].controls.columns.removeAt(columnIndex);
     }
 
     createArticle() {
