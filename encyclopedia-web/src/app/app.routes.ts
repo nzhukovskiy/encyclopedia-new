@@ -24,6 +24,12 @@ export const routes: Routes = [
         resolve: {article: articleResolver}
     },
     {
+        path: "articles/:id",
+        loadComponent: () => import('./features/articles/components/article-page/article-page.component').then(c => c.ArticlePageComponent),
+        canActivate: [authGuard],
+        resolve: {article: articleResolver}
+    },
+    {
         path: "",
         loadComponent: () => import('./app.component').then(c => c.AppComponent),
         canActivate: [authGuard]

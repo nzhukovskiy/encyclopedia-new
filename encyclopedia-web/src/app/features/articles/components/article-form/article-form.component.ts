@@ -5,6 +5,8 @@ import {ArticlesApiService} from '../../services/articles-api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Resource} from "../../models/resource";
 import {Appointment} from "../../models/appointment";
+import {Article} from '../../models/article';
+import { Section } from '../../models/section';
 
 @Component({
     selector: 'app-article-form',
@@ -60,8 +62,13 @@ export class ArticleFormComponent implements OnInit {
 
     })
 
+    article?: Article;
+
+    protected readonly FormType = FormType;
+
     ngOnInit(): void {
         this.route.data.subscribe(({article}) => {
+            this.article = article;
             if (!article) {
                 this.formType = FormType.CREATE;
                 return;
@@ -72,6 +79,9 @@ export class ArticleFormComponent implements OnInit {
             }
             for (let appointment of article.appointments) {
                 this.addAppointment(appointment);
+            }
+            for (let section of article.sections) {
+                this.addSection(section);
             }
         })
     }
@@ -105,23 +115,31 @@ export class ArticleFormComponent implements OnInit {
         }))
     }
 
-    addSection() {
+    addSection(section?: Section) {
         this.articleFormGroup.controls.sections.push(new FormGroup({
-            title: new FormControl("", {nonNullable: true}),
-            columns: new FormArray([
-                new FormGroup({
-                    order: new FormControl(0, {nonNullable: true}),
-                    text: new FormControl("", {nonNullable: true})
-                })
-            ])
+            title: new FormControl(section ? section.title : "", {nonNullable: true}),
+            columns: new FormArray(
+                section ? 
+                section!.columns.map((x, i) => new FormGroup({
+                    order: new FormControl(i, {nonNullable: true}),
+                    text: new FormControl(x.text, {nonNullable: true})
+                })) : 
+                [
+                    new FormGroup({
+                        order: new FormControl(0, {nonNullable: true}),
+                        text: new FormControl("", {nonNullable: true})
+                }
+                )]
+            )
         }))
     }
 
     addColumn(sectionIndex: number) {
         this.sections[sectionIndex].controls.columns.push(new FormGroup({
-            order: new FormControl(1, {nonNullable: true}),
+            order: new FormControl(0, {nonNullable: true}),
             text: new FormControl("", {nonNullable: true})
         }))
+        this.setColumnOrder(sectionIndex);
     }
 
     removeResource(index: number) {
@@ -138,12 +156,33 @@ export class ArticleFormComponent implements OnInit {
 
     removeColumn(sectionIndex: number, columnIndex: number) {
         this.sections[sectionIndex].controls.columns.removeAt(columnIndex);
+        this.setColumnOrder(sectionIndex);
     }
 
-    createArticle() {
-        console.log(this.articleFormGroup.getRawValue())
-        // this.articlesApiService.create(this.articleFormGroup.getRawValue()).subscribe(() => {
-        //     this.router.navigate([""]).then();
-        // })
+    handleFormSubmission() {
+        if (this.formType === FormType.CREATE) {
+            this.createArticle();
+        }
+        else {
+            this.updateArticle();
+        }
+    }
+
+    private createArticle() {
+        this.articlesApiService.create(this.articleFormGroup.getRawValue()).subscribe(() => {
+            this.router.navigate([""]).then();
+        })
+    }
+
+    private updateArticle() {
+        this.articlesApiService.update(this.article!._id, this.articleFormGroup.getRawValue()).subscribe(() => {
+            this.router.navigate([""]).then();
+        })
+    }
+
+    private setColumnOrder(sectionIndex: number) {
+        this.sections[sectionIndex].controls.columns.controls.forEach((x, i) => {
+            x.controls.order.patchValue(i);
+        })
     }
 }

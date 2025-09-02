@@ -1,5 +1,5 @@
 <p>article-form works!</p>
-<form [formGroup]="articleFormGroup" (ngSubmit)="createArticle()">
+<form [formGroup]="articleFormGroup" (ngSubmit)="handleFormSubmission()">
     <div>
         <label for="title">Название</label>
         <input id="title" type="text" formControlName="title">
@@ -110,6 +110,7 @@
             @for (column of section.controls.columns.controls; track $index; let columnIndex = $index) {
                 <form [formGroup]="column">
                     <div>
+                        <p>Номер колонки: {{column.controls.order.value}}</p>
                         <label >Текст колонки</label>
                         <input type="text" formControlName="text">
                     </div>
@@ -122,5 +123,10 @@
     }
     <button (click)="addSection()" type="button">Добавить новую секцию</button>
 
-    <button type="submit">Создать статью</button>
+    @if (formType === FormType.CREATE) {
+        <button type="submit">Создать статью</button>
+    }
+    @else {
+        <button type="submit">Обновить статью</button>
+    }
 </form>

@@ -1,8 +1,8 @@
 export class Column {
-    constructor(order: string, text: string) {
+    constructor(order: number, text: string) {
         this.order = order;
         this.text = text;
     }
-    order: string;
+    order: number;
     text: string;
 }
