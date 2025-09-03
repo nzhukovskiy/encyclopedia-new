@@ -1,8 +1,14 @@
-<p>all-articles works!</p>
-@for (article of (articles$ | async); track article.title) {
-    <div>{{article._id}}</div>
-    <div>{{article.title}}</div>
-}
-<!--<div *ngFor="let article of (articles$ | async)">-->
-<!--    {{article.title}}-->
-<!--</div>-->
+<h1>Список статей</h1>
+<app-searchbar (searchEvent)="searchByTitle($event)"></app-searchbar>
+<div class="articles-list">
+    @for (article of (articles$ | async)!.data; track article.title) {
+        <app-article-card [article]="article"></app-article-card>
+    }
+</div>
+<mat-paginator class="startups-paginator" [length]="(articles$ | async)?.pagination?.total"
+               [pageIndex]="(articles$ | async)?.pagination?.page"
+               [pageSize]="(articles$ | async)?.pagination?.limit"
+               [pageSizeOptions]="[5, 8, 10, 25, 100]"
+               (page)="handlePageChange($event)"
+               aria-label="Select page">
+</mat-paginator>

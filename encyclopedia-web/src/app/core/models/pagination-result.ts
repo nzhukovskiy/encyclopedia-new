@@ -1,3 +1,5 @@
+import {PaginationData} from './pagination-data';
+
 export class PaginationResult<T> {
     constructor(data: T[], pagination: { total: number; page: number; limit: number }) {
         this.data = data;
@@ -5,9 +7,5 @@ export class PaginationResult<T> {
     }
 
     data: T[];
-    pagination: {
-        total: number;
-        page: number;
-        limit: number;
-    }
+    pagination: PaginationData;
 }

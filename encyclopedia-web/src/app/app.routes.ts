@@ -31,7 +31,7 @@ export const routes: Routes = [
     },
     {
         path: "",
-        loadComponent: () => import('./app.component').then(c => c.AppComponent),
+        loadComponent: () => import('./features/articles/components/all-articles/all-articles.component').then(c => c.AllArticlesComponent),
         canActivate: [authGuard]
     }
 ];

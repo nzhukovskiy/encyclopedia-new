@@ -1,0 +1,14 @@
+.article-card {
+    margin: 5px;
+    padding: 15px 25px;
+    box-shadow: 0 0 8px rgb(190, 190, 190);
+
+    h2 {
+        margin-bottom: 10px;
+    }
+}
+.main-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
