@@ -1,11 +1,22 @@
-<form [formGroup]="loginFormGroup">
-    <div>
-        <label for="email">Адрес электронной почты</label>
-        <input id="email" type="email" formControlName="email">
-    </div>
-    <div>
-        <label for="password">Пароль</label>
-        <input id="password" type="password" formControlName="password">
-    </div>
-    <button type="submit" (click)="login()">Войти</button>
+<form [formGroup]="loginFormGroup" class="form-container">
+    @if (loginFormGroup.controls.email) {
+        <app-form-field
+            [formGroup]="loginFormGroup"
+            [controlName]="'email'"
+            [label]="'Адрес электронной почты'"
+            [placeholder]="'example@mail.ru'"
+            [iconCode]="'person'"
+            [type]="'text'">
+        </app-form-field>
+    }
+
+    <app-form-field
+        [formGroup]="loginFormGroup"
+        [controlName]="'password'"
+        [label]="'Пароль'"
+        [iconCode]="'key'"
+        [type]="'password'">
+    </app-form-field>
+
+    <app-form-submit-button [buttonText]="'Войти'" (clickEvent)="login()"></app-form-submit-button>
 </form>

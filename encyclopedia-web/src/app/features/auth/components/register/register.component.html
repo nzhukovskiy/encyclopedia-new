@@ -1,19 +1,33 @@
-<form [formGroup]="registerFormGroup">
-    <div>
-        <label for="email">Адрес электронной почты</label>
-        <input id="email" type="email" formControlName="email">
-    </div>
-    <div>
-        <label for="password">Пароль</label>
-        <input id="password" type="password" formControlName="password">
-    </div>
-    <div>
-        <label for="firstName">Имя</label>
-        <input id="firstName" type="text" formControlName="firstName">
-    </div>
-    <div>
-        <label for="lastName">Фамилия</label>
-        <input id="lastName" type="text" formControlName="lastName">
-    </div>
-    <button type="submit" (click)="register()">Зарегистрироваться</button>
+<form [formGroup]="registerFormGroup" class="form-container">
+    <app-form-field
+        [formGroup]="registerFormGroup"
+        [controlName]="'email'"
+        [label]="'Адрес электронной почты'"
+        [iconCode]="'email'"
+        [placeholder]="'example@mail.ru'"
+        [type]="'email'">
+    </app-form-field>
+    <app-form-field
+        [formGroup]="registerFormGroup"
+        [controlName]="'password'"
+        [label]="'Пароль'"
+        [iconCode]="'key'"
+        [type]="'password'">
+    </app-form-field>
+    <app-form-field
+        [formGroup]="registerFormGroup"
+        [controlName]="'firstName'"
+        [label]="'Имя'"
+        [placeholder]="'Иван'"
+        [type]="'text'">
+    </app-form-field>
+    <app-form-field
+        [formGroup]="registerFormGroup"
+        [controlName]="'lastName'"
+        [label]="'Фамилия'"
+        [placeholder]="'Иванов'"
+        [type]="'text'">
+    </app-form-field>
+
+    <app-form-submit-button [buttonText]="'Зарегистрироваться'" (clickEvent)="register()"></app-form-submit-button>
 </form>

@@ -1,0 +1,14 @@
+<div class="input-container">
+    @if (label) {
+        <label>{{label}}</label>
+    }
+    <input class="input-field"
+            [ngClass]="{'shifted': iconCode}"
+           [type]="type"
+           [formControl]="formControl"
+           [placeholder]="placeholder">
+
+    @if (iconCode) {
+        <mat-icon>{{iconCode}}</mat-icon>
+    }
+</div>
