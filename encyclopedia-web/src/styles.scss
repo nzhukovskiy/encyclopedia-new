@@ -2,6 +2,10 @@
 @use '@angular/material' as mat;
 @include mat.core();
 
+@import 'bootstrap/scss/bootstrap';
+
+@import 'ngx-toastr/toastr';
+
 body {
     font-family: Arial, Helvetica, sans-serif !important;
     padding: 0;
@@ -27,4 +31,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .form-container {
     max-width: 700px;
     margin: 0 auto;
+}
+.error-message {
+    color: #e53e3e;
 }

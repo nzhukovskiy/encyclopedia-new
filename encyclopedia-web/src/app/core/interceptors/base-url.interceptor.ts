@@ -2,7 +2,7 @@ import {HttpInterceptorFn} from '@angular/common/http';
 
 export const baseUrlInterceptor: HttpInterceptorFn = (req, next) => {
     const baseUrl = "http://localhost:3000/";
-    if (req.url.startsWith('http')) {
+    if (req.url.startsWith('http') || req.url.includes('i18n')) {
         return next(req);
     }
 

@@ -1,0 +1,8 @@
+{
+    "server-errors": {
+
+    },
+    "form-errors": {
+        "PASSWORD_MINLENGTH": "Длина пароля должна быть не менее 8 символов"
+    }
+}

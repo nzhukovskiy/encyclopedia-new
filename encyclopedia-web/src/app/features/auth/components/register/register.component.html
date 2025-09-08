@@ -1,33 +1,62 @@
 <form [formGroup]="registerFormGroup" class="form-container">
     <app-form-field
         [formGroup]="registerFormGroup"
-        [controlName]="'email'"
-        [label]="'Адрес электронной почты'"
-        [iconCode]="'email'"
-        [placeholder]="'example@mail.ru'"
-        [type]="'email'">
-    </app-form-field>
-    <app-form-field
-        [formGroup]="registerFormGroup"
-        [controlName]="'password'"
-        [label]="'Пароль'"
-        [iconCode]="'key'"
-        [type]="'password'">
-    </app-form-field>
-    <app-form-field
-        [formGroup]="registerFormGroup"
         [controlName]="'firstName'"
         [label]="'Имя'"
         [placeholder]="'Иван'"
-        [type]="'text'">
+        [type]="'text'"
+        [name]="'firstName'">
     </app-form-field>
+    @if (showErrors(registerFormGroup.controls.firstName)) {
+        @if (registerFormGroup.controls.firstName.errors!['required']) {
+            <div class="error-message">{{"form-errors.firstName.required" | translate}}</div>
+        }
+    }
     <app-form-field
         [formGroup]="registerFormGroup"
         [controlName]="'lastName'"
         [label]="'Фамилия'"
         [placeholder]="'Иванов'"
-        [type]="'text'">
+        [type]="'text'"
+        [name]="'lastName'">
     </app-form-field>
-
+    @if (showErrors(registerFormGroup.controls.lastName)) {
+        @if (registerFormGroup.controls.lastName.errors!['required']) {
+            <div class="error-message">{{"form-errors.lastName.required" | translate}}</div>
+        }
+    }
+    <app-form-field
+        [formGroup]="registerFormGroup"
+        [controlName]="'email'"
+        [label]="'Адрес электронной почты'"
+        [iconCode]="'email'"
+        [placeholder]="'example@mail.ru'"
+        [type]="'email'"
+        [name]="'email'">
+    </app-form-field>
+    @if (showErrors(registerFormGroup.controls.email)) {
+        @if (registerFormGroup.controls.email.errors!['required']) {
+            <div class="error-message">{{"form-errors.email.required" | translate}}</div>
+        }
+        @if (registerFormGroup.controls.email.errors!['email']) {
+            <div class="error-message">{{"form-errors.email.email" | translate}}</div>
+        }
+    }
+    <app-form-field
+        [formGroup]="registerFormGroup"
+        [controlName]="'password'"
+        [label]="'Пароль'"
+        [iconCode]="'key'"
+        [type]="'password'"
+        [name]="'password'">
+    </app-form-field>
+    @if (showErrors(registerFormGroup.controls.password)) {
+        @if (registerFormGroup.controls.password.errors!['required']) {
+            <div class="error-message">{{"form-errors.password.required" | translate}}</div>
+        }
+        @if (registerFormGroup.controls.password.errors!['minlength']) {
+            <div class="error-message">{{"form-errors.password.minlength" | translate}}</div>
+        }
+    }
     <app-form-submit-button [buttonText]="'Зарегистрироваться'" (clickEvent)="register()"></app-form-submit-button>
 </form>

@@ -3,10 +3,12 @@
         <label>{{label}}</label>
     }
     <input class="input-field"
-            [ngClass]="{'shifted': iconCode}"
+            [ngClass]="{'shifted': iconCode, 'error': (formControl.dirty || formControl.touched) && formControl.errors}"
            [type]="type"
            [formControl]="formControl"
-           [placeholder]="placeholder">
+           [placeholder]="placeholder"
+            [autocomplete]="autocomplete"
+            [name]="name">
 
     @if (iconCode) {
         <mat-icon>{{iconCode}}</mat-icon>

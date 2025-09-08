@@ -6,7 +6,9 @@
             [label]="'Адрес электронной почты'"
             [placeholder]="'example@mail.ru'"
             [iconCode]="'person'"
-            [type]="'text'">
+            [type]="'email'"
+            [autocomplete]="'email'"
+            [name]="'email'">
         </app-form-field>
     }
 
@@ -15,7 +17,9 @@
         [controlName]="'password'"
         [label]="'Пароль'"
         [iconCode]="'key'"
-        [type]="'password'">
+        [type]="'password'"
+        [name]="'password'"
+        [autocomplete]="'current-password'">
     </app-form-field>
 
     <app-form-submit-button [buttonText]="'Войти'" (clickEvent)="login()"></app-form-submit-button>

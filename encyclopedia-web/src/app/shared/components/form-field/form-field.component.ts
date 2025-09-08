@@ -17,6 +17,9 @@ export class FormFieldComponent {
     @Input() type = "text";
     @Input() placeholder = "";
     @Input() iconCode = "";
+    @Input() autocomplete = "";
+    @Input() name = "";
+
 
     get formControl(): FormControl {
         return this.formGroup!.get(this.controlName!) as FormControl;
