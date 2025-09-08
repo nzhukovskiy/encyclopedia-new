@@ -7,10 +7,13 @@ import {Resource} from "../../models/resource";
 import {Appointment} from "../../models/appointment";
 import {Article} from '../../models/article';
 import { Section } from '../../models/section';
+import { FormFieldComponent } from '../../../../shared/components/form-field/form-field.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {DateValueAccessorDirective} from '../../../../core/directives/date-value-accessor.directive';
 
 @Component({
     selector: 'app-article-form',
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, FormFieldComponent, NgbModule, DateValueAccessorDirective],
     templateUrl: './article-form.component.html',
     styleUrl: './article-form.component.scss'
 })
@@ -119,11 +122,11 @@ export class ArticleFormComponent implements OnInit {
         this.articleFormGroup.controls.sections.push(new FormGroup({
             title: new FormControl(section ? section.title : "", {nonNullable: true}),
             columns: new FormArray(
-                section ? 
+                section ?
                 section!.columns.map((x, i) => new FormGroup({
                     order: new FormControl(i, {nonNullable: true}),
                     text: new FormControl(x.text, {nonNullable: true})
-                })) : 
+                })) :
                 [
                     new FormGroup({
                         order: new FormControl(0, {nonNullable: true}),

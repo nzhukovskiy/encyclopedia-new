@@ -1,5 +1,13 @@
 <div class="article-card">
-    <a [href]="[`/articles/${article!._id}`]"><h2>{{article!.title}}</h2></a>
+    <div class="card-title">
+        <a [href]="[`/articles/${article!._id}`]"><h2>{{article!.title}}</h2></a>
+        <app-form-submit-button [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
+            <ng-template>
+                <mat-icon>edit</mat-icon>Редактировать
+            </ng-template>
+        </app-form-submit-button>
+    </div>
+    
     <div class="main-info">
         <div class="article-image">
             <img height="150" src="assets/no-image-placeholder.jpg">

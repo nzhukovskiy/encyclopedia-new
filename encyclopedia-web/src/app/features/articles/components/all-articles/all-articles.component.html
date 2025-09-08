@@ -1,4 +1,15 @@
-<h1>Список статей</h1>
+<div class="title-section">
+    <h1>Список статей</h1>
+    <app-form-submit-button
+        [buttonText]="'Создать'"
+        [buttonType]="'link'"
+        [link]="'articles/new'">
+        <ng-template>
+            <mat-icon>add</mat-icon>
+            Создать
+        </ng-template>
+    </app-form-submit-button>
+</div>
 <app-searchbar (searchEvent)="searchByTitle($event)"></app-searchbar>
 <div class="articles-list">
     @for (article of (articles$ | async)!.data; track article.title) {

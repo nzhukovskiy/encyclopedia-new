@@ -1,1 +1,12 @@
-<button type="submit" class="submit-button" (click)="handleClick()">{{buttonText}}</button>
+<!-- <a [href]="link" class="submit-button" (click)="handleClick()"><ng-content></ng-content></a> -->
+@if (buttonType === "link") {
+    <a [href]="link" class="submit-button" (click)="handleClick()">
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </a>
+}
+@else {
+    <button [type]="buttonType" class="submit-button" (click)="handleClick()">
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </button>
+}
+

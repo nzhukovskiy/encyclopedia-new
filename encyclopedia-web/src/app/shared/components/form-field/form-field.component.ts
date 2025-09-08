@@ -2,10 +2,11 @@ import {Component, Input} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
+import {DateValueAccessorDirective} from '../../../core/directives/date-value-accessor.directive';
 
 @Component({
   selector: 'app-form-field',
-  imports: [MatIconModule, ReactiveFormsModule, CommonModule],
+  imports: [MatIconModule, ReactiveFormsModule, CommonModule, DateValueAccessorDirective],
   templateUrl: './form-field.component.html',
   styleUrl: './form-field.component.scss'
 })

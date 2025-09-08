@@ -2,13 +2,32 @@
     @if (label) {
         <label>{{label}}</label>
     }
-    <input class="input-field"
-            [ngClass]="{'shifted': iconCode, 'error': (formControl.dirty || formControl.touched) && formControl.errors}"
-           [type]="type"
-           [formControl]="formControl"
-           [placeholder]="placeholder"
-            [autocomplete]="autocomplete"
-            [name]="name">
+    @if (type === "textarea") {
+        <textarea class="input-field"
+        [ngClass]="{'shifted': iconCode, 'error': (formControl.dirty || formControl.touched) && formControl.errors}"
+       [formControl]="formControl"
+        [name]="name"></textarea>
+    }
+    @else if (type === "date") {
+        <input class="input-field"
+        appDateInput
+        [ngClass]="{'shifted': iconCode, 'error': (formControl.dirty || formControl.touched) && formControl.errors}"
+       [type]="type"
+       [formControl]="formControl"
+       [placeholder]="placeholder"
+        [autocomplete]="autocomplete"
+        [name]="name">
+    }
+    @else {
+        <input class="input-field"
+        [ngClass]="{'shifted': iconCode, 'error': (formControl.dirty || formControl.touched) && formControl.errors}"
+       [type]="type"
+       [formControl]="formControl"
+       [placeholder]="placeholder"
+        [autocomplete]="autocomplete"
+        [name]="name">
+    }
+    
 
     @if (iconCode) {
         <mat-icon>{{iconCode}}</mat-icon>

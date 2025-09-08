@@ -1,4 +1,4 @@
-<form [formGroup]="loginFormGroup" class="form-container">
+<form [formGroup]="loginFormGroup" class="form-container login-form">
     @if (loginFormGroup.controls.email) {
         <app-form-field
             [formGroup]="loginFormGroup"
@@ -22,5 +22,13 @@
         [autocomplete]="'current-password'">
     </app-form-field>
 
-    <app-form-submit-button [buttonText]="'Войти'" (clickEvent)="login()"></app-form-submit-button>
+
+    <div class="button-container">
+        <app-form-submit-button (clickEvent)="login()">
+            <ng-template>
+                Войти
+            </ng-template>
+        </app-form-submit-button>
+    </div>
+
 </form>

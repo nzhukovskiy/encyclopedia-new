@@ -1,35 +1,76 @@
-<p>article-form works!</p>
-<form [formGroup]="articleFormGroup" (ngSubmit)="handleFormSubmission()">
-    <div>
+<form [formGroup]="articleFormGroup" (ngSubmit)="handleFormSubmission()" class="form-container">
+    @if (formType === FormType.CREATE) {
+        <h1>Создание новой статьи</h1>
+    }
+    @else {
+        <h1>Редактирование статьи</h1>
+    }
+    <!-- <div>
         <label for="title">Название</label>
         <input id="title" type="text" formControlName="title">
-    </div>
-    <div>
+    </div> -->
+    <app-form-field
+        [formGroup]="articleFormGroup"
+        [controlName]="'title'"
+        [label]="'Название'"
+        [type]="'text'">
+    </app-form-field>
+    <!-- <div>
         <label for="body">Текст статьи</label>
         <textarea id="body" formControlName="body"></textarea>
-    </div>
+    </div> -->
+    <app-form-field
+        [formGroup]="articleFormGroup"
+        [controlName]="'body'"
+        [label]="'Текст статьи'"
+        [type]="'textarea'">
+    </app-form-field>
     <form [formGroup]="articleFormGroup.controls.birth">
-        <div>
+        <app-form-field
+            [formGroup]="articleFormGroup.controls.birth"
+            [controlName]="'date'"
+            [label]="'Дата рождения'"
+            [type]="'date'">
+        </app-form-field>
+        <!-- <div>
             <label for="birthDate">Дата рождения</label>
-            <input id="birthDate" type="date" formControlName="date">
-        </div>
+            <input appDateInput id="birthDate" type="date" formControlName="date">
+        </div> -->
         <form [formGroup]="articleFormGroup.controls.birth.controls.place">
-            <div>
+            <app-form-field
+                [formGroup]="articleFormGroup.controls.birth.controls.place"
+                [controlName]="'place'"
+                [label]="'Место рождения'"
+                [type]="'text'">
+            </app-form-field>
+            <!-- <div>
                 <label for="birthPlace">Место рождения</label>
                 <input id="birthPlace" type="text" formControlName="place">
-            </div>
-            <div>
+            </div> -->
+            <app-form-field
+                [formGroup]="articleFormGroup.controls.birth.controls.place"
+                [controlName]="'country'"
+                [label]="'Страна рождения'"
+                [type]="'text'">
+            </app-form-field>
+            <!-- <div>
                 <label for="birthCountry">Страна рождения</label>
                 <input id="birthCountry" type="text" formControlName="country">
-            </div>
+            </div> -->
         </form>
     </form>
-    
+
     <form [formGroup]="articleFormGroup.controls.death">
-        <div>
+        <app-form-field
+            [formGroup]="articleFormGroup.controls.death"
+            [controlName]="'date'"
+            [label]="'Дата смерти'"
+            [type]="'date'">
+        </app-form-field>
+        <!-- <div>
             <label for="deathDate">Дата смерти</label>
             <input id="deathDate" type="date" formControlName="date">
-        </div>
+        </div> -->
         <form [formGroup]="articleFormGroup.controls.death.controls.place">
             <div>
                 <label for="deathPlace">Место смерти</label>
@@ -40,9 +81,9 @@
                 <input id="deathCountry" type="text" formControlName="country">
             </div>
         </form>
-        
+
     </form>
-    
+
     <!-- <div>
         <label for="birthDate">Дата смерти</label>
         <input id="deathDate" type="date" formControlName="deathDate">

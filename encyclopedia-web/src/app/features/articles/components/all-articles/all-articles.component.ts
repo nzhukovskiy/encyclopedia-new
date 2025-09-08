@@ -9,10 +9,19 @@ import {ArticleFilterParams} from '../../models/article-filter-params';
 import { PaginationResult } from '../../../../core/models/pagination-result';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import { FormSubmitButtonComponent } from "../../../../shared/components/form-submit-button/form-submit-button.component";
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-all-articles',
-  imports: [AsyncPipe, ArticleCardComponent, SearchbarComponent, MatPaginator],
+  imports: [AsyncPipe,
+    ArticleCardComponent, 
+    SearchbarComponent, 
+    MatPaginator, 
+    FormSubmitButtonComponent,
+    MatIconModule
+],
   templateUrl: './all-articles.component.html',
   styleUrl: './all-articles.component.scss'
 })
