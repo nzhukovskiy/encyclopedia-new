@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Article} from '../../models/article';
+import { DateWordFormatPipe } from "../../../../shared/pipes/date-word-format.pipe";
 
 @Component({
   selector: 'app-article-page',
-  imports: [],
+  imports: [DateWordFormatPipe],
   templateUrl: './article-page.component.html',
   styleUrl: './article-page.component.scss'
 })
