@@ -34,7 +34,6 @@
         
     </table>
 }
-
 <table class="article-table">
     @for (resource of article?.resources; track $index) {
         <tr>
@@ -86,6 +85,24 @@
     }
     
 </table>
+@if (article?.sections?.length) {
+    <table class="article-table">
+        @for (section of article?.sections; track $index; let sectionIndex = $index) {
+            @if (section.title) {
+                <tr>
+                    <td class="section-title" [colSpan]="section.columns.length">{{section.title}}</td>
+                </tr>
+            }
+            <tr>
+                @for (column of section.columns; track $index; let columnIndex = $index) {
+                    <td>{{column.text}}</td>
+                }
+            </tr>
+        }
+        
+    </table>
+}
+
 
 
 <p [innerHTML]="articleBody"></p>

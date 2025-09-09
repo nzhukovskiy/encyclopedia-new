@@ -1,14 +1,13 @@
 .article-table {
     width: 40%;
-    
+
     tr, td {
         border-width: 1px;
     }
     
     
     p {
-        display: flex;
-        justify-content: center;
+        text-align: center;
     }
 }
 .resource-value {
@@ -22,4 +21,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+.section-title {
+    text-align: center;
+    background-color: #eaecf0;
 }
