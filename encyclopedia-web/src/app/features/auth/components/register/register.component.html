@@ -58,13 +58,11 @@
             <div class="error-message">{{"form-errors.password.minlength" | translate}}</div>
         }
     }
-    <div class="button-container">
-        <app-form-submit-button 
+    <app-button 
         (clickEvent)="register()">
         <ng-template>
             Зарегистрироваться
         </ng-template>
-    </app-form-submit-button>
-    </div>
+    </app-button>
 
 </form>

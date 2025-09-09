@@ -10,10 +10,12 @@ import { Section } from '../../models/section';
 import { FormFieldComponent } from '../../../../shared/components/form-field/form-field.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DateValueAccessorDirective} from '../../../../core/directives/date-value-accessor.directive';
+import { MatIconModule } from '@angular/material/icon';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 
 @Component({
     selector: 'app-article-form',
-    imports: [ReactiveFormsModule, FormFieldComponent, NgbModule, DateValueAccessorDirective],
+    imports: [ReactiveFormsModule, FormFieldComponent, NgbModule, DateValueAccessorDirective, MatIconModule, ButtonComponent],
     templateUrl: './article-form.component.html',
     styleUrl: './article-form.component.scss'
 })

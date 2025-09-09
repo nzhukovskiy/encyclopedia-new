@@ -5,20 +5,12 @@
     @else {
         <h1>Редактирование статьи</h1>
     }
-    <!-- <div>
-        <label for="title">Название</label>
-        <input id="title" type="text" formControlName="title">
-    </div> -->
     <app-form-field
         [formGroup]="articleFormGroup"
         [controlName]="'title'"
         [label]="'Название'"
         [type]="'text'">
     </app-form-field>
-    <!-- <div>
-        <label for="body">Текст статьи</label>
-        <textarea id="body" formControlName="body"></textarea>
-    </div> -->
     <app-form-field
         [formGroup]="articleFormGroup"
         [controlName]="'body'"
@@ -32,31 +24,21 @@
             [label]="'Дата рождения'"
             [type]="'date'">
         </app-form-field>
-        <!-- <div>
-            <label for="birthDate">Дата рождения</label>
-            <input appDateInput id="birthDate" type="date" formControlName="date">
-        </div> -->
         <form [formGroup]="articleFormGroup.controls.birth.controls.place">
             <app-form-field
                 [formGroup]="articleFormGroup.controls.birth.controls.place"
                 [controlName]="'place'"
                 [label]="'Место рождения'"
-                [type]="'text'">
+                [type]="'text'"
+                [iconCode]="'location_on'">
             </app-form-field>
-            <!-- <div>
-                <label for="birthPlace">Место рождения</label>
-                <input id="birthPlace" type="text" formControlName="place">
-            </div> -->
             <app-form-field
                 [formGroup]="articleFormGroup.controls.birth.controls.place"
                 [controlName]="'country'"
                 [label]="'Страна рождения'"
-                [type]="'text'">
+                [type]="'text'"
+                [iconCode]="'flag'">
             </app-form-field>
-            <!-- <div>
-                <label for="birthCountry">Страна рождения</label>
-                <input id="birthCountry" type="text" formControlName="country">
-            </div> -->
         </form>
     </form>
 
@@ -67,107 +49,162 @@
             [label]="'Дата смерти'"
             [type]="'date'">
         </app-form-field>
-        <!-- <div>
-            <label for="deathDate">Дата смерти</label>
-            <input id="deathDate" type="date" formControlName="date">
-        </div> -->
         <form [formGroup]="articleFormGroup.controls.death.controls.place">
-            <div>
-                <label for="deathPlace">Место смерти</label>
-                <input id="deathPlace" type="text" formControlName="place">
-            </div>
-            <div>
-                <label for="deathCountry">Страна смерти</label>
-                <input id="deathCountry" type="text" formControlName="country">
-            </div>
+            <app-form-field
+                [formGroup]="articleFormGroup.controls.death.controls.place"
+                [controlName]="'place'"
+                [label]="'Место смерти'"
+                [type]="'text'"
+                [iconCode]="'location_on'">
+            </app-form-field>
+            <app-form-field
+                [formGroup]="articleFormGroup.controls.death.controls.place"
+                [controlName]="'country'"
+                [label]="'Страна смерти'"
+                [type]="'text'"
+                [iconCode]="'flag'">
+            </app-form-field>
         </form>
 
     </form>
 
-    <!-- <div>
-        <label for="birthDate">Дата смерти</label>
-        <input id="deathDate" type="date" formControlName="deathDate">
-    </div>
-    <div>
-        <label for="deathPlace">Место смерти</label>
-        <input id="deathPlace" type="text" formControlName="deathPlace">
-    </div>
-    <div>
-        <label for="deathCountry">Страна смерти</label>
-        <input id="deathCountry" type="text" formControlName="deathCountry">
-    </div> -->
+    <h2>Ресурсы</h2>
     @for (resourceControl of resources; track $index) {
-        <form [formGroup]="resourceControl">
-            <div>
-                <label >Название параметра</label>
-                <input type="text" formControlName="key">
-            </div>
-            <div>
-                <label >Значение параметра</label>
-                <input type="text" formControlName="value">
-            </div>
-            <button (click)="removeResource($index)" type="button">Удалить это поле</button>
+        <form [formGroup]="resourceControl" class="resources-form">
+            <app-form-field
+                class="resource-input"
+                [formGroup]="resourceControl"
+                [controlName]="'key'"
+                [label]="'Название параметра'"
+                [type]="'text'">
+            </app-form-field>
+            <app-form-field
+                class="resource-input"
+                [formGroup]="resourceControl"
+                [controlName]="'value'"
+                [label]="'Значение параметра'"
+                [type]="'text'">
+            </app-form-field>
+            <button class="btn btn-danger remove-item-btn" (click)="removeResource($index)" type="button"><mat-icon>delete</mat-icon></button>
         </form>
     }
-    <button (click)="addResource()" type="button">Добавить новое поле</button>
+    <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="addResource()">
+        <ng-template>
+            <mat-icon>add</mat-icon>Добавить новое поле
+        </ng-template>
+    </app-button>
 
-
-
+    <h2>Должности</h2>
     @for (appointment of appointments; track $index) {
+        <div class="appointment-title">
+            <h3>Должность № {{$index + 1}}</h3>
+            <button class="btn btn-danger remove-item-btn" (click)="removeAppointment($index)" type="button"><mat-icon>delete</mat-icon></button>
+        </div>
+        
         <form [formGroup]="appointment">
-            <div>
-                <label >Название должности</label>
-                <input type="text" formControlName="title">
-            </div>
-            <div>
-                <label >Начало</label>
-                <input type="date" formControlName="startDate">
-            </div>
-            <div>
-                <label >Окончание</label>
-                <input type="date" formControlName="endDate">
-            </div>
-            <div>
-                <label >Предшественник</label>
-                <input type="text" formControlName="predecessor">
-            </div>
-            <div>
-                <label >Преемник</label>
-                <input type="text" formControlName="successor">
-            </div>
-            <button (click)="removeAppointment($index)" type="button">Удалить должность</button>
+            <app-form-field
+                class="resource-input"
+                [formGroup]="appointment"
+                [controlName]="'title'"
+                [label]="'Название должности'"
+                [type]="'text'">
+            </app-form-field>
+            <app-form-field
+                class="resource-input"
+                [formGroup]="appointment"
+                [controlName]="'startDate'"
+                [label]="'Начало'"
+                [type]="'date'">
+            </app-form-field>
+            <app-form-field
+                class="resource-input"
+                [formGroup]="appointment"
+                [controlName]="'endDate'"
+                [label]="'Конец'"
+                [type]="'date'">
+            </app-form-field>
+            <app-form-field
+                class="resource-input"
+                [formGroup]="appointment"
+                [controlName]="'predecessor'"
+                [label]="'Предшественник'"
+                [type]="'text'">
+            </app-form-field>
+            <app-form-field
+                class="resource-input"
+                [formGroup]="appointment"
+                [controlName]="'successor'"
+                [label]="'Преемник'"
+                [type]="'text'">
+            </app-form-field>            
         </form>
     }
-    <button (click)="addAppointment()" type="button">Добавить новую должность</button>
+    <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="addAppointment()">
+        <ng-template>
+            <mat-icon>add</mat-icon>Добавить новую должность
+        </ng-template>
+    </app-button>
 
 
 
+    <h2>Секции</h2>
     @for (section of sections; track $index; let sectionIndex = $index) {
+        <div class="appointment-title">
+            <h3>Секция № {{sectionIndex + 1}}</h3>
+            <div class="section-controls">
+                <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="addColumn(sectionIndex)">
+                    <ng-template>
+                        <mat-icon>add</mat-icon>Добавить колонку
+                    </ng-template>
+                </app-button>
+                <button class="btn btn-danger remove-item-btn" (click)="removeSection(sectionIndex)" type="button"><mat-icon>delete</mat-icon></button>
+            </div>  
+        </div>
         <form [formGroup]="section">
-            <div>
-                <label >Название секции</label>
-                <input type="text" formControlName="title">
+            <app-form-field
+                class="resource-input"
+                [formGroup]="section"
+                [controlName]="'title'"
+                [label]="'Название секции'"
+                [type]="'text'">
+            </app-form-field> 
+            <div class="columns-form">
+                @for (column of section.controls.columns.controls; track $index; let columnIndex = $index) {
+                    <form [formGroup]="column" class="single-column">
+                        <div class="column-title">
+                            <h4>Колонка {{column.controls.order.value + 1}}</h4>
+                            <button class="btn btn-danger remove-item-btn" (click)="removeColumn(sectionIndex, columnIndex)" type="button"><mat-icon>delete</mat-icon></button>
+                        </div>
+                        <app-form-field
+                            class="resource-input"
+                            [formGroup]="column"
+                            [controlName]="'text'"
+                            [label]="'Текст колонки'"
+                            [type]="'textarea'">
+                        </app-form-field> 
+                    </form>
+                }
             </div>
-            @for (column of section.controls.columns.controls; track $index; let columnIndex = $index) {
-                <form [formGroup]="column">
-                    <div>
-                        <p>Номер колонки: {{column.controls.order.value}}</p>
-                        <label >Текст колонки</label>
-                        <input type="text" formControlName="text">
-                    </div>
-                </form>
-                <button (click)="removeColumn(sectionIndex, columnIndex)" type="button">Удалить колонку</button>
-            }
-            <button (click)="addColumn(sectionIndex)" type="button">Добавить колонку</button>
-            <button (click)="removeSection(sectionIndex)" type="button">Удалить секцию</button>
         </form>
     }
-    <button (click)="addSection()" type="button">Добавить новую секцию</button>
+    <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="addSection()">
+        <ng-template>
+            <mat-icon>add</mat-icon>Добавить новую секцию
+        </ng-template>
+    </app-button>
 
     @if (formType === FormType.CREATE) {
-        <button type="submit">Создать статью</button>
+        <app-button [buttonType]="'submit'">
+            <ng-template>
+                Создать статью
+            </ng-template>
+        </app-button>
     }
     @else {
-        <button type="submit">Обновить статью</button>
+        <app-button [buttonType]="'submit'">
+            <ng-template>
+                Обновить статью
+            </ng-template>
+        </app-button>
     }
 </form>

@@ -2,16 +2,16 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RegisterUserDto} from '../../dtos/register-user.dto';
 import {FormFieldComponent} from '../../../../shared/components/form-field/form-field.component';
-import {FormSubmitButtonComponent} from '../../../../shared/components/form-submit-button/form-submit-button.component';
+import {ButtonComponent} from '../../../../shared/components/button/button.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { showErrors } from '../../../../core/utils/form-validation-utils';
 
 @Component({
   selector: 'app-register',
   imports: [
-    ReactiveFormsModule, 
-    FormFieldComponent, 
-    FormSubmitButtonComponent,
+    ReactiveFormsModule,
+    FormFieldComponent,
+    ButtonComponent,
     TranslatePipe],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

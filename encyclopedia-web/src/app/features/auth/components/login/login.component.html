@@ -23,12 +23,10 @@
     </app-form-field>
 
 
-    <div class="button-container">
-        <app-form-submit-button (clickEvent)="login()">
-            <ng-template>
-                Войти
-            </ng-template>
-        </app-form-submit-button>
-    </div>
+    <app-button (clickEvent)="login()">
+        <ng-template>
+            Войти
+        </ng-template>
+    </app-button>
 
 </form>

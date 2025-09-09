@@ -2,12 +2,12 @@ import { NgTemplateOutlet } from '@angular/common';
 import {Component, ContentChild, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
 
 @Component({
-  selector: 'app-form-submit-button',
+  selector: 'app-button',
   imports: [NgTemplateOutlet],
-  templateUrl: './form-submit-button.component.html',
-  styleUrl: './form-submit-button.component.scss'
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.scss'
 })
-export class FormSubmitButtonComponent {
+export class ButtonComponent {
 
     @Input() buttonText = "";
     @Input() buttonType: "submit" | "button" | "link" = "button";

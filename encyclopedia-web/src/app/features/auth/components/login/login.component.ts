@@ -2,11 +2,11 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {LoginUserDto} from '../../dtos/login-user.dto';
 import {FormFieldComponent} from '../../../../shared/components/form-field/form-field.component';
-import {FormSubmitButtonComponent} from '../../../../shared/components/form-submit-button/form-submit-button.component';
+import {ButtonComponent} from '../../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, FormFieldComponent, FormSubmitButtonComponent],
+  imports: [ReactiveFormsModule, FormFieldComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -1,11 +1,11 @@
 <div class="article-card">
     <div class="card-title">
         <a [href]="[`/articles/${article!._id}`]"><h2>{{article!.title}}</h2></a>
-        <app-form-submit-button [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
+        <app-button [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
             <ng-template>
                 <mat-icon>edit</mat-icon>Редактировать
             </ng-template>
-        </app-form-submit-button>
+        </app-button>
     </div>
     
     <div class="main-info">

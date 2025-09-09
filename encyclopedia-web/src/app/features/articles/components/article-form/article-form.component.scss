@@ -1,0 +1,55 @@
+.resources-form {
+    display: flex;
+    align-items: center;
+}
+.remove-item-btn {
+    padding: 9px 5px 1px 5px;
+    height: min-content;
+    margin-top: 33px;
+}
+.resource-input {
+    flex: 1;
+}
+.add-resource-btn {
+    display: block;
+    margin: 20px 0;
+    max-width: 300px;
+}
+h2 {
+    margin: 20px 0;
+}
+h3 {
+    margin: 15px 0;
+}
+.appointment-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .remove-item-btn {
+        margin-top: 0;
+    }
+}
+.section-controls, .column-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.columns-form {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+}
+.single-column {
+    min-width: 200px;
+    flex: 1;
+}
+.column-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .remove-item-btn {
+        margin-top: 0;
+    }
+}
