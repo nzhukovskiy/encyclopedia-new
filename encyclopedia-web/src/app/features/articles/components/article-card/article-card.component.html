@@ -1,13 +1,21 @@
 <div class="article-card">
     <div class="card-title">
         <a [href]="[`/articles/${article!._id}`]"><h2>{{article!.title}}</h2></a>
-        <app-button [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
-            <ng-template>
-                <mat-icon>edit</mat-icon>Редактировать
-            </ng-template>
-        </app-button>
+        <div class="controls">
+            <app-button [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
+                <ng-template>
+                    <mat-icon>edit</mat-icon>Редактировать
+                </ng-template>
+            </app-button>
+            <app-button (clickEvent)="delete()">
+                <ng-template>
+                    <mat-icon>delete</mat-icon>Удалить
+                </ng-template>
+            </app-button>
+        </div>
+
     </div>
-    
+
     <div class="main-info">
         <div class="article-image">
             <img height="150" src="assets/no-image-placeholder.jpg">

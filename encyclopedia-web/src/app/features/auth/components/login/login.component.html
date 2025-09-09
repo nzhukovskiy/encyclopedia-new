@@ -23,7 +23,7 @@
     </app-form-field>
 
 
-    <app-button (clickEvent)="login()">
+    <app-button [buttonType]="'submit'" (clickEvent)="login()">
         <ng-template>
             Войти
         </ng-template>

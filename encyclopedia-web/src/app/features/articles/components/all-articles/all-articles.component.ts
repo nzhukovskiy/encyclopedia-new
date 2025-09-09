@@ -73,4 +73,10 @@ export class AllArticlesComponent implements OnInit {
             }),
             true);
     }
+
+    handleDeletion(articleId: string) {
+        this.articlesService.delete(articleId, this.title).subscribe(() => {
+
+        })
+    }
 }

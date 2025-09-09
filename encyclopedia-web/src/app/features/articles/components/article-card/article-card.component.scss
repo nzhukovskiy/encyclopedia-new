@@ -6,6 +6,11 @@
     h2 {
         margin-bottom: 10px;
     }
+
+    .controls {
+        display: flex;
+        gap: 15px;
+    }
 }
 .main-info {
     display: flex;

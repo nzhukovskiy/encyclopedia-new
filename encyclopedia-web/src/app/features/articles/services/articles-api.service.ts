@@ -35,11 +35,15 @@ export class ArticlesApiService {
         return this.httpClient.post<Article>(`articles/new`, createArticleDto);
     }
 
-    update(id: number, updateArticleDto: UpdateArticleDto) {
+    update(id: string, updateArticleDto: UpdateArticleDto) {
         return this.httpClient.put<Article>(`articles/${id}`, updateArticleDto);
     }
 
     getOne(id: string) {
         return this.httpClient.get<Article>(`articles/${id}`);
+    }
+
+    delete(id: string) {
+        return this.httpClient.delete(`articles/${id}`);
     }
 }

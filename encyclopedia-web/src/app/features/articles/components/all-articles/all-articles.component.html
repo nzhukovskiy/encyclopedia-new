@@ -13,7 +13,7 @@
 <app-searchbar (searchEvent)="searchByTitle($event)"></app-searchbar>
 <div class="articles-list">
     @for (article of (articles$ | async)!.data; track article.title) {
-        <app-article-card [article]="article"></app-article-card>
+        <app-article-card [article]="article" (deleteEvent)="handleDeletion($event)"></app-article-card>
     }
 </div>
 <mat-paginator class="startups-paginator" [length]="(articles$ | async)?.pagination?.total"

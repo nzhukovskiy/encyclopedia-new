@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, tap} from 'rxjs';
+import {BehaviorSubject, switchMap, tap} from 'rxjs';
 import {Article} from '../models/article';
 import {ArticlesApiService} from './articles-api.service';
 import {ArticleFilterParams} from '../models/article-filter-params';
@@ -33,12 +33,17 @@ export class ArticlesService {
         if (this.$articles.value.data.length && !forceReload) {
             return;
         }
-        console.log(articleFilterParams?.title)
         this.$loading.next(true);
         this.articlesApiService.getAll(articleFilterParams).pipe(tap(articles => {
             this.$articles.next(articles);
         })).subscribe(() => {
             this.$loading.next(false);
         })
+    }
+
+    delete(articleId: string, title: string = "") {
+        return this.articlesApiService.delete(articleId).pipe(tap(() => {
+            this.loadArticles(new ArticleFilterParams(title, this.$articles.value.pagination), true);
+        }));
     }
 }

@@ -106,3 +106,8 @@
 
 
 <p [innerHTML]="articleBody"></p>
+<app-button class="add-resource-btn" (clickEvent)="deleteArticle()">
+    <ng-template>
+        <mat-icon>delete</mat-icon>Удалить
+    </ng-template>
+</app-button>

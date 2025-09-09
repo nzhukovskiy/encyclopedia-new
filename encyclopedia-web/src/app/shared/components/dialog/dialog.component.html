@@ -1,0 +1,15 @@
+<div class="dialog-container">
+    <h3>Вы уверены?</h3>
+    <div class="dialog-buttons-group">
+        <app-button (clickEvent)="closeWithAccept()">
+            <ng-template>
+                <mat-icon>check</mat-icon>Подтвердить
+            </ng-template>
+        </app-button>
+        <app-button (clickEvent)="closeWithReject()">
+            <ng-template>
+                <mat-icon>close</mat-icon>Отклонить
+            </ng-template>
+        </app-button>
+    </div>
+</div>

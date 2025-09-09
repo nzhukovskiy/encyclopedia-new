@@ -12,6 +12,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DateValueAccessorDirective} from '../../../../core/directives/date-value-accessor.directive';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "../../../../shared/components/dialog/dialog.component";
+import {filter} from "rxjs";
+import {SubmitDialogReturn} from "../../../../shared/constants/submit-dialog-return";
 
 @Component({
     selector: 'app-article-form',
@@ -23,7 +27,8 @@ export class ArticleFormComponent implements OnInit {
 
     constructor(private readonly articlesApiService: ArticlesApiService,
                 private readonly router: Router,
-                private readonly route: ActivatedRoute) {
+                private readonly route: ActivatedRoute,
+                private readonly matDialog: MatDialog) {
 
     }
 
@@ -34,25 +39,14 @@ export class ArticleFormComponent implements OnInit {
     articleFormGroup = new FormGroup({
         title: new FormControl("", {nonNullable: true}),
         body: new FormControl("", {nonNullable: true}),
-        birth:
-            // new FormControl<any>(null) as AbstractControl,
-        //     new FormControl<FormGroup<{
-        //     date: FormControl<Date>,
-        //     place: FormGroup<{
-        //         country: FormControl<string>,
-        //         place: FormControl<string>
-        //     }>
-        // }> | null>(null),
-            new FormGroup({
+        birth: new FormGroup({
             date: new FormControl<Date>(new Date(), {nonNullable: true}),
             place: new FormGroup({
                 country: new FormControl("", {nonNullable: true}),
                 place: new FormControl("", {nonNullable: true}),
             })
         }),
-        death:
-            // new FormControl<any>(null) as AbstractControl,
-            new FormGroup({
+        death: new FormGroup({
             date: new FormControl<Date>(new Date(), {nonNullable: true}),
             place: new FormGroup({
                 country: new FormControl("", {nonNullable: true}),
@@ -89,7 +83,6 @@ export class ArticleFormComponent implements OnInit {
             this.article = article;
             if (!article) {
                 this.formType = FormType.CREATE;
-                // this.articleFormGroup.controls.birth = new FormGroup(null)
                 return;
             }
             this.articleFormGroup.patchValue(article);
@@ -188,20 +181,36 @@ export class ArticleFormComponent implements OnInit {
     }
 
     removeResource(index: number) {
-        this.articleFormGroup.controls.resources.removeAt(index);
+        this.matDialog.open(DialogComponent).afterClosed()
+            .pipe(filter((x) => x === SubmitDialogReturn.ACCEPT))
+            .subscribe(() => {
+                this.articleFormGroup.controls.resources.removeAt(index);
+            })
     }
 
     removeAppointment(index: number) {
-        this.articleFormGroup.controls.appointments.removeAt(index);
+        this.matDialog.open(DialogComponent).afterClosed()
+            .pipe(filter((x) => x === SubmitDialogReturn.ACCEPT))
+            .subscribe(() => {
+                this.articleFormGroup.controls.appointments.removeAt(index);
+            })
     }
 
     removeSection(index: number) {
-        this.articleFormGroup.controls.sections.removeAt(index);
+        this.matDialog.open(DialogComponent).afterClosed()
+            .pipe(filter((x) => x === SubmitDialogReturn.ACCEPT))
+            .subscribe(() => {
+                this.articleFormGroup.controls.sections.removeAt(index);
+            })
     }
 
     removeColumn(sectionIndex: number, columnIndex: number) {
-        this.sections[sectionIndex].controls.columns.removeAt(columnIndex);
-        this.setColumnOrder(sectionIndex);
+        this.matDialog.open(DialogComponent).afterClosed()
+            .pipe(filter((x) => x === SubmitDialogReturn.ACCEPT))
+            .subscribe(() => {
+                this.sections[sectionIndex].controls.columns.removeAt(columnIndex);
+                this.setColumnOrder(sectionIndex);
+            })
     }
 
     handleFormSubmission() {

@@ -5,7 +5,7 @@ import {PlaceAndDate} from './place-and-date';
 
 export class Article {
 
-    constructor(id: number, title: string, body: string, birth: PlaceAndDate, death: PlaceAndDate, resources: Resource[], appointments: Appointment[], sections: Section[], createdAt: Date, updatedAt: Date) {
+    constructor(id: string, title: string, body: string, birth: PlaceAndDate, death: PlaceAndDate, resources: Resource[], appointments: Appointment[], sections: Section[], createdAt: Date, updatedAt: Date) {
         this._id = id;
         this.title = title;
         this.body = body;
@@ -18,7 +18,7 @@ export class Article {
         this.updatedAt = updatedAt;
     }
 
-    _id: number;
+    _id: string;
     title: string;
     body: string;
     birth: PlaceAndDate | null;

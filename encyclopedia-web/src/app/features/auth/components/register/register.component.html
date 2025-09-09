@@ -58,7 +58,7 @@
             <div class="error-message">{{"form-errors.password.minlength" | translate}}</div>
         }
     }
-    <app-button 
+    <app-button [buttonType]="'submit'"
         (clickEvent)="register()">
         <ng-template>
             Зарегистрироваться
