@@ -21,8 +21,8 @@ export class Article {
     _id: number;
     title: string;
     body: string;
-    birth: PlaceAndDate;
-    death: PlaceAndDate;
+    birth: PlaceAndDate | null;
+    death: PlaceAndDate | null;
     resources: Resource[];
     appointments: Appointment[];
     sections: Section[];

@@ -23,11 +23,6 @@ export class DateValueAccessorDirective implements ControlValueAccessor {
     constructor(private elementRef: ElementRef) {}
 
     writeValue(value: any): void {
-        if (value && typeof value === 'string') {
-            value = new Date(value);
-        }
-
-        console.log(value)
         if (value instanceof Date && !isNaN(value.getTime())) {
             this.elementRef.nativeElement.valueAsDate = value;
         } else {

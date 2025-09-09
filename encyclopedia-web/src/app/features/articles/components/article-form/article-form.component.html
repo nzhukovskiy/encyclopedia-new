@@ -17,56 +17,84 @@
         [label]="'Текст статьи'"
         [type]="'textarea'">
     </app-form-field>
-    <form [formGroup]="articleFormGroup.controls.birth">
-        <app-form-field
-            [formGroup]="articleFormGroup.controls.birth"
-            [controlName]="'date'"
-            [label]="'Дата рождения'"
-            [type]="'date'">
-        </app-form-field>
-        <form [formGroup]="articleFormGroup.controls.birth.controls.place">
+    @if (showBirth) {
+        <form [formGroup]="articleFormGroup.controls.birth">
             <app-form-field
-                [formGroup]="articleFormGroup.controls.birth.controls.place"
-                [controlName]="'place'"
-                [label]="'Место рождения'"
-                [type]="'text'"
-                [iconCode]="'location_on'">
+                [formGroup]="articleFormGroup.controls.birth"
+                [controlName]="'date'"
+                [label]="'Дата рождения'"
+                [type]="'date'">
             </app-form-field>
-            <app-form-field
-                [formGroup]="articleFormGroup.controls.birth.controls.place"
-                [controlName]="'country'"
-                [label]="'Страна рождения'"
-                [type]="'text'"
-                [iconCode]="'flag'">
-            </app-form-field>
+            <form [formGroup]="articleFormGroup.controls.birth.controls.place">
+                <app-form-field
+                    [formGroup]="articleFormGroup.controls.birth.controls.place"
+                    [controlName]="'place'"
+                    [label]="'Место рождения'"
+                    [type]="'text'"
+                    [iconCode]="'location_on'">
+                </app-form-field>
+                <app-form-field
+                    [formGroup]="articleFormGroup.controls.birth.controls.place"
+                    [controlName]="'country'"
+                    [label]="'Страна рождения'"
+                    [type]="'text'"
+                    [iconCode]="'flag'">
+                </app-form-field>
+            </form>
         </form>
-    </form>
+        <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="showBirth = false">
+            <ng-template>
+                <mat-icon>delete</mat-icon>Удалить информацию о рождении
+            </ng-template>
+        </app-button>
+    }
+    @else {
+        <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="showBirth = true">
+            <ng-template>
+                <mat-icon>add</mat-icon>Добавить информацию о рождении
+            </ng-template>
+        </app-button>
+    }
+    
 
-    <form [formGroup]="articleFormGroup.controls.death">
-        <app-form-field
-            [formGroup]="articleFormGroup.controls.death"
-            [controlName]="'date'"
-            [label]="'Дата смерти'"
-            [type]="'date'">
-        </app-form-field>
-        <form [formGroup]="articleFormGroup.controls.death.controls.place">
+    @if (showDeath) {
+        <form [formGroup]="articleFormGroup.controls.death">
             <app-form-field
-                [formGroup]="articleFormGroup.controls.death.controls.place"
-                [controlName]="'place'"
-                [label]="'Место смерти'"
-                [type]="'text'"
-                [iconCode]="'location_on'">
+                [formGroup]="articleFormGroup.controls.death"
+                [controlName]="'date'"
+                [label]="'Дата смерти'"
+                [type]="'date'">
             </app-form-field>
-            <app-form-field
-                [formGroup]="articleFormGroup.controls.death.controls.place"
-                [controlName]="'country'"
-                [label]="'Страна смерти'"
-                [type]="'text'"
-                [iconCode]="'flag'">
-            </app-form-field>
+            <form [formGroup]="articleFormGroup.controls.death.controls.place">
+                <app-form-field
+                    [formGroup]="articleFormGroup.controls.death.controls.place"
+                    [controlName]="'place'"
+                    [label]="'Место смерти'"
+                    [type]="'text'"
+                    [iconCode]="'location_on'">
+                </app-form-field>
+                <app-form-field
+                    [formGroup]="articleFormGroup.controls.death.controls.place"
+                    [controlName]="'country'"
+                    [label]="'Страна смерти'"
+                    [type]="'text'"
+                    [iconCode]="'flag'">
+                </app-form-field>
+            </form>
         </form>
-
-    </form>
+        <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="showDeath = false">
+            <ng-template>
+                <mat-icon>delete</mat-icon>Удалить информацию о смерти
+            </ng-template>
+        </app-button>
+    }
+    @else {
+        <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="showDeath = true">
+            <ng-template>
+                <mat-icon>add</mat-icon>Добавить информацию о смерти
+            </ng-template>
+        </app-button>
+    }
 
     <h2>Ресурсы</h2>
     @for (resourceControl of resources; track $index) {

@@ -10,12 +10,13 @@ import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
 import {provideToastr} from 'ngx-toastr';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {errorInterceptor} from './core/interceptors/error.interceptor';
+import {dateInterceptor} from './core/interceptors/date.interceptor';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideZoneChangeDetection({eventCoalescing: true}),
         provideRouter(routes),
-        provideHttpClient(withInterceptors([errorInterceptor, baseUrlInterceptor, authInterceptor])),
+        provideHttpClient(withInterceptors([errorInterceptor, baseUrlInterceptor, authInterceptor, dateInterceptor])),
         provideHttpClient(),
         provideTranslateService({
             lang: 'ru',

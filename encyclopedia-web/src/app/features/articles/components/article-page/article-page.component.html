@@ -1,11 +1,27 @@
-<h2>{{article?.title}}</h2>
+<div class="article-title-container">
+    <h2>{{article?.title}}</h2>
+    <app-button class="add-resource-btn" [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
+        <ng-template>
+            <mat-icon>edit</mat-icon>Редактировать
+        </ng-template>
+    </app-button>
+</div>
+
 @if (article?.appointments?.length) {
     <table class="article-table">
         @for (appointment of article?.appointments; track $index) {
             <tr>
                 <td>
                     <p>{{appointment.title}}</p>
-                    <p>{{appointment.startDate | dateWordFormat}} - {{appointment.endDate | dateWordFormat}}</p>
+                    @if (appointment.startDate) {
+                        @if (appointment.endDate) {
+                            <p>{{appointment.startDate | dateWordFormat}} - {{appointment.endDate | dateWordFormat}}</p>
+                        }
+                        @else {
+                            <p>с {{appointment.startDate | dateWordFormat}}</p>
+                        }
+                    }
+                    
                     @if (appointment.predecessor) {
                         <p>Предшественник: {{appointment.predecessor}}</p>
                     }
@@ -18,21 +34,58 @@
         
     </table>
 }
-@if (article?.resources?.length) {
-    <table class="article-table">
-        @for (resource of article?.resources; track $index) {
-            <tr>
-                <td>
-                    {{resource.key}}
-                </td>
-                <td>
-                    {{resource.value}}
-                </td>
-            </tr>
-        }
-        
-    </table>
-}
+
+<table class="article-table">
+    @for (resource of article?.resources; track $index) {
+        <tr>
+            <td class="resource-key">
+                {{resource.key}}
+            </td>
+            <td class="resource-value">
+                {{resource.value}}
+            </td>
+        </tr>
+    }
+    @if (article?.birth) {
+        <tr>
+            <td class="resource-key">
+                Рождение
+            </td>
+            <td class="resource-value">
+                <span>{{article!.birth!.date | dateWordFormat}}</span>
+                @if (!article!.death) {
+                    <span> ({{age | ageFormat}})</span>
+                }
+                @if (article?.birth?.place?.place) {
+                    <span>, {{article?.birth?.place?.place}}</span>
+                }
+                @if (article?.birth?.place?.country) {
+                    <span>, {{article?.birth?.place?.country}}</span>
+                }
+            </td>
+        </tr>
+    }
+    @if (article?.death) {
+        <tr>
+            <td class="resource-key">
+                Смерть
+            </td>
+            <td class="resource-value">
+                <span>{{article!.death!.date | dateWordFormat}}</span>
+                @if (article!.birth!.date && article!.death!.date) {
+                    <span> ({{age | ageFormat}})</span>
+                }
+                @if (article?.death?.place?.place) {
+                    <span>, {{article?.death?.place?.place}}</span>
+                }
+                @if (article?.death?.place?.country) {
+                    <span>, {{article?.death?.place?.country}}</span>
+                }
+            </td>
+        </tr>
+    }
+    
+</table>
 
 
-<p>{{article?.body}}</p>
+<p [innerHTML]="articleBody"></p>

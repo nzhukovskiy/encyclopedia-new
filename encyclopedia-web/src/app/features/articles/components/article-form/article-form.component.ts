@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormType} from '../../../../core/constants/form-type';
-import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {AbstractControl, Form, FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ArticlesApiService} from '../../services/articles-api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Resource} from "../../models/resource";
@@ -28,18 +28,31 @@ export class ArticleFormComponent implements OnInit {
     }
 
     formType = FormType.UPDATE;
+    showBirth = false;
+    showDeath = false;
 
     articleFormGroup = new FormGroup({
         title: new FormControl("", {nonNullable: true}),
         body: new FormControl("", {nonNullable: true}),
-        birth: new FormGroup({
+        birth:
+            // new FormControl<any>(null) as AbstractControl,
+        //     new FormControl<FormGroup<{
+        //     date: FormControl<Date>,
+        //     place: FormGroup<{
+        //         country: FormControl<string>,
+        //         place: FormControl<string>
+        //     }>
+        // }> | null>(null),
+            new FormGroup({
             date: new FormControl<Date>(new Date(), {nonNullable: true}),
             place: new FormGroup({
                 country: new FormControl("", {nonNullable: true}),
                 place: new FormControl("", {nonNullable: true}),
             })
         }),
-        death: new FormGroup({
+        death:
+            // new FormControl<any>(null) as AbstractControl,
+            new FormGroup({
             date: new FormControl<Date>(new Date(), {nonNullable: true}),
             place: new FormGroup({
                 country: new FormControl("", {nonNullable: true}),
@@ -76,9 +89,16 @@ export class ArticleFormComponent implements OnInit {
             this.article = article;
             if (!article) {
                 this.formType = FormType.CREATE;
+                // this.articleFormGroup.controls.birth = new FormGroup(null)
                 return;
             }
             this.articleFormGroup.patchValue(article);
+            if (article.birth) {
+                this.showBirth = true;
+            }
+            if (article.death) {
+                this.showDeath = true;
+            }
             for (let resource of article.resources) {
                 this.addResource(resource);
             }
@@ -101,6 +121,26 @@ export class ArticleFormComponent implements OnInit {
 
     get sections() {
         return this.articleFormGroup.controls.sections.controls;
+    }
+
+    addBirthSection() {
+        this.articleFormGroup.setControl("birth", new FormGroup({
+            date: new FormControl<Date>(new Date(), {nonNullable: true}),
+            place: new FormGroup({
+                country: new FormControl("", {nonNullable: true}),
+                place: new FormControl("", {nonNullable: true}),
+            })
+        }),)
+    }
+
+    addDeathSection() {
+        this.articleFormGroup.setControl("death", new FormGroup({
+            date: new FormControl<Date>(new Date(), {nonNullable: true}),
+            place: new FormGroup({
+                country: new FormControl("", {nonNullable: true}),
+                place: new FormControl("", {nonNullable: true}),
+            })
+        }),)
     }
 
     addResource(resource?: Resource) {
@@ -174,13 +214,13 @@ export class ArticleFormComponent implements OnInit {
     }
 
     private createArticle() {
-        this.articlesApiService.create(this.articleFormGroup.getRawValue()).subscribe(() => {
+        this.articlesApiService.create(this.getProcessedArticle()).subscribe(() => {
             this.router.navigate([""]).then();
         })
     }
 
     private updateArticle() {
-        this.articlesApiService.update(this.article!._id, this.articleFormGroup.getRawValue()).subscribe(() => {
+        this.articlesApiService.update(this.article!._id, this.getProcessedArticle()).subscribe(() => {
             this.router.navigate([""]).then();
         })
     }
@@ -189,5 +229,12 @@ export class ArticleFormComponent implements OnInit {
         this.sections[sectionIndex].controls.columns.controls.forEach((x, i) => {
             x.controls.order.patchValue(i);
         })
+    }
+
+    private getProcessedArticle() {
+        const article = this.articleFormGroup.getRawValue();
+        return {...article,
+            birth: this.showBirth ? article.birth : null,
+            death: this.showDeath ? article.death : null}
     }
 }
