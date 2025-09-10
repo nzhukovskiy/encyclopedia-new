@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormType} from '../../../../core/constants/form-type';
 import {AbstractControl, Form, FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ArticlesApiService} from '../../services/articles-api.service';
@@ -16,10 +16,18 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../../../shared/components/dialog/dialog.component";
 import {filter} from "rxjs";
 import {SubmitDialogReturn} from "../../../../shared/constants/submit-dialog-return";
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {Bold, ClassicEditor, Essentials, Italic, Paragraph, Subscript, Superscript, Underline} from 'ckeditor5';
 
 @Component({
     selector: 'app-article-form',
-    imports: [ReactiveFormsModule, FormFieldComponent, NgbModule, DateValueAccessorDirective, MatIconModule, ButtonComponent],
+    imports: [ReactiveFormsModule,
+        FormFieldComponent,
+        NgbModule,
+        DateValueAccessorDirective,
+        MatIconModule,
+        ButtonComponent
+    ],
     templateUrl: './article-form.component.html',
     styleUrl: './article-form.component.scss'
 })

@@ -3,10 +3,15 @@
         <label>{{label}}</label>
     }
     @if (type === "textarea") {
-        <textarea class="input-field"
+        <ckeditor 
+            [editor]="Editor" 
+            [config]="config"
+            [formControl]="formControl">
+        </ckeditor>
+        <!-- <textarea class="input-field"
         [ngClass]="{'shifted': iconCode, 'error': (formControl.dirty || formControl.touched) && formControl.errors}"
        [formControl]="formControl"
-        [name]="name"></textarea>
+        [name]="name"></textarea> -->
     }
     @else if (type === "date") {
         <input class="input-field"
