@@ -4,6 +4,7 @@ import {Article} from '../models/article';
 import {ArticlesApiService} from './articles-api.service';
 import {ArticleFilterParams} from '../models/article-filter-params';
 import {PaginationResult} from '../../../core/models/pagination-result';
+import {AuthService} from '../../../core/services/auth/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,8 @@ export class ArticlesService {
     private $loading = new BehaviorSubject(false);
     loading = this.$loading.asObservable();
 
-    constructor(private readonly articlesApiService: ArticlesApiService) {
+    constructor(private readonly articlesApiService: ArticlesApiService,
+                private readonly authService: AuthService) {
     }
 
     loadArticles(articleFilterParams?: ArticleFilterParams, forceReload = false) {

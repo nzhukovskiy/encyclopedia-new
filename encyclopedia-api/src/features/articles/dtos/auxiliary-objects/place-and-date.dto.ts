@@ -1,5 +1,5 @@
 import {PlaceDto} from "./place.dto";
-import {IsDateString, IsOptional, ValidateNested} from "class-validator";
+import {IsDate, IsDateString, IsOptional, ValidateNested} from "class-validator";
 import {Type} from "class-transformer";
 
 export class PlaceAndDateDto {
@@ -8,6 +8,6 @@ export class PlaceAndDateDto {
     @Type(()=>PlaceDto)
     place: PlaceDto;
 
-    @IsDateString()
+    @IsDate()
     date: Date;
 }

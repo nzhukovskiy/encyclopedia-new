@@ -5,6 +5,7 @@ import {PaginationResult} from '../../../core/models/pagination-result';
 import {CreateArticleDto} from '../dtos/create-article.dto';
 import {UpdateArticleDto} from '../dtos/update-article.dto';
 import {ArticleFilterParams} from '../models/article-filter-params';
+import {SaveDraftDto} from '../dtos/save-draft-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -45,5 +46,17 @@ export class ArticlesApiService {
 
     delete(id: string) {
         return this.httpClient.delete(`articles/${id}`);
+    }
+
+    getDraft() {
+        return this.httpClient.get<Article>(`articles/draft`);
+    }
+
+    saveDraft(saveDraftDto: SaveDraftDto) {
+        return this.httpClient.post<Article>(`articles/draft`, saveDraftDto);
+    }
+
+    publishDraft() {
+        return this.httpClient.post<Article>(`articles/publish`, {});
     }
 }

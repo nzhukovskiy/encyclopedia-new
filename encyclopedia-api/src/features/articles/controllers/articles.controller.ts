@@ -10,6 +10,7 @@ import {
     CollectionResponse
 } from '@forlagshuset/nestjs-mongoose-paginate';
 import {ArticlePaginationProperties} from "../pagination/article-pagination-properties";
+import {CreateDraftDto} from "../dtos/create-draft-dto";
 
 @ApiTags('articles')
 @ApiBearerAuth()
@@ -24,6 +25,21 @@ export class ArticlesController {
         return this.articlesService.getAll(collectionDto);
     }
 
+    @Get('draft')
+    getDraft(@Request() request) {
+        return this.articlesService.getDraft(request.user.id);
+    }
+
+    @Post('draft')
+    saveDraft(@Request() request, @Body() createDraftDto: CreateDraftDto) {
+        return this.articlesService.saveDraft(createDraftDto, request.user.id);
+    }
+
+    @Post('publish')
+    publishDraft(@Request() request, @Param('id') id: string) {
+        return this.articlesService.publishDraft(request.user.id);
+    }
+
     @Get(':id')
     get(@Param('id') id: string) {
         return this.articlesService.get(id);
@@ -32,11 +48,6 @@ export class ArticlesController {
     @Get(':id/history')
     getForArticle(@Param('id') id: string) {
         return this.historyService.getForArticle(id);
-    }
-
-    @Post('new')
-    create(@Request() request, @Body() createArticleDto: CreateArticleDto) {
-        return this.articlesService.create(createArticleDto, request.user.id);
     }
 
     @Put(':id')

@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../../../shared/components/dialog/dialog.component";
-import {filter} from "rxjs";
+import {debounceTime, distinctUntilChanged, filter, skip} from "rxjs";
 import {SubmitDialogReturn} from "../../../../shared/constants/submit-dialog-return";
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {Bold, ClassicEditor, Essentials, Italic, Paragraph, Subscript, Superscript, Underline} from 'ckeditor5';
@@ -91,25 +91,41 @@ export class ArticleFormComponent implements OnInit {
             this.article = article;
             if (!article) {
                 this.formType = FormType.CREATE;
+                this.articlesApiService.getDraft().subscribe(draft => {
+                    this.loadFields(draft);
+                })
                 return;
             }
-            this.articleFormGroup.patchValue(article);
-            if (article.birth) {
-                this.showBirth = true;
-            }
-            if (article.death) {
-                this.showDeath = true;
-            }
-            for (let resource of article.resources) {
-                this.addResource(resource);
-            }
-            for (let appointment of article.appointments) {
-                this.addAppointment(appointment);
-            }
-            for (let section of article.sections) {
-                this.addSection(section);
-            }
+            this.loadFields(article);
         })
+        this.articleFormGroup.valueChanges.pipe(
+            skip(1),
+            debounceTime(1000),
+        ).subscribe(() => {
+            this.articlesApiService.saveDraft(this.getProcessedArticle()).subscribe(() => {});
+        })
+    }
+
+    private loadFields(article: Article) {
+        if (!article) {
+            return;
+        }
+        this.articleFormGroup.patchValue(article as any, {emitEvent: false});
+        if (article.birth) {
+            this.showBirth = true;
+        }
+        if (article.death) {
+            this.showDeath = true;
+        }
+        for (let resource of article.resources) {
+            this.addResource(resource);
+        }
+        for (let appointment of article.appointments) {
+            this.addAppointment(appointment);
+        }
+        for (let section of article.sections) {
+            this.addSection(section);
+        }
     }
 
     get resources() {
@@ -231,9 +247,12 @@ export class ArticleFormComponent implements OnInit {
     }
 
     private createArticle() {
-        this.articlesApiService.create(this.getProcessedArticle()).subscribe(() => {
+        this.articlesApiService.publishDraft().subscribe(() => {
             this.router.navigate([""]).then();
         })
+        // this.articlesApiService.create(this.getProcessedArticle()).subscribe(() => {
+        //     this.router.navigate([""]).then();
+        // })
     }
 
     private updateArticle() {
@@ -244,7 +263,7 @@ export class ArticleFormComponent implements OnInit {
 
     private setColumnOrder(sectionIndex: number) {
         this.sections[sectionIndex].controls.columns.controls.forEach((x, i) => {
-            x.controls.order.patchValue(i);
+            x.controls.order.patchValue(i, {emitEvent: false});
         })
     }
 
