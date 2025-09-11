@@ -114,7 +114,11 @@
                 [label]="'Значение параметра'"
                 [type]="'text'">
             </app-form-field>
-            <button class="btn btn-danger remove-item-btn" (click)="removeResource($index)" type="button"><mat-icon>delete</mat-icon></button>
+            <app-button (clickEvent)="removeResource($index)" [buttonStyle]="'danger'" [buttonOutline]="'small'">
+                <ng-template>
+                    <mat-icon>delete</mat-icon>
+                </ng-template>
+            </app-button>
         </form>
     }
     <app-button class="add-resource-btn" [buttonType]="'button'" (clickEvent)="addResource()">
@@ -127,7 +131,11 @@
     @for (appointment of appointments; track $index) {
         <div class="appointment-title">
             <h3>Должность № {{$index + 1}}</h3>
-            <button class="btn btn-danger remove-item-btn" (click)="removeAppointment($index)" type="button"><mat-icon>delete</mat-icon></button>
+            <app-button (clickEvent)="removeAppointment($index)" [buttonStyle]="'danger'" [buttonOutline]="'small'">
+                <ng-template>
+                    <mat-icon>delete</mat-icon>
+                </ng-template>
+            </app-button>
         </div>
         
         <form [formGroup]="appointment">
@@ -186,7 +194,11 @@
                         <mat-icon>add</mat-icon>Добавить колонку
                     </ng-template>
                 </app-button>
-                <button class="btn btn-danger remove-item-btn" (click)="removeSection(sectionIndex)" type="button"><mat-icon>delete</mat-icon></button>
+                <app-button (clickEvent)="removeSection(sectionIndex)" [buttonStyle]="'danger'" [buttonOutline]="'small'">
+                    <ng-template>
+                        <mat-icon>delete</mat-icon>
+                    </ng-template>
+                </app-button>
             </div>  
         </div>
         <form [formGroup]="section">
@@ -202,7 +214,11 @@
                     <form [formGroup]="column" class="single-column">
                         <div class="column-title">
                             <h4>Колонка {{column.controls.order.value + 1}}</h4>
-                            <button class="btn btn-danger remove-item-btn" (click)="removeColumn(sectionIndex, columnIndex)" type="button"><mat-icon>delete</mat-icon></button>
+                            <app-button (clickEvent)="removeColumn(sectionIndex, columnIndex)" [buttonStyle]="'danger'" [buttonOutline]="'small'">
+                                <ng-template>
+                                    <mat-icon>delete</mat-icon>
+                                </ng-template>
+                            </app-button>
                         </div>
                         <app-form-field
                             class="resource-input"

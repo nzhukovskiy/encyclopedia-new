@@ -14,6 +14,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &.danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+
+        &:hover {
+            background-color: #bb2d3b;
+            border-color: #b02a37;
+        }
+    }
+
+    &.small {
+        padding: 10px 5px;
+    }
 }
 
 .submit-button:hover {

@@ -94,16 +94,17 @@ export class ArticleFormComponent implements OnInit {
                 this.articlesApiService.getDraft().subscribe(draft => {
                     this.loadFields(draft);
                 })
+                this.articleFormGroup.valueChanges.pipe(
+                    skip(1),
+                    debounceTime(1000),
+                ).subscribe(() => {
+                    this.articlesApiService.saveDraft(this.getProcessedArticle()).subscribe(() => {});
+                })
                 return;
             }
             this.loadFields(article);
         })
-        this.articleFormGroup.valueChanges.pipe(
-            skip(1),
-            debounceTime(1000),
-        ).subscribe(() => {
-            this.articlesApiService.saveDraft(this.getProcessedArticle()).subscribe(() => {});
-        })
+
     }
 
     private loadFields(article: Article) {
@@ -247,8 +248,8 @@ export class ArticleFormComponent implements OnInit {
     }
 
     private createArticle() {
-        this.articlesApiService.publishDraft().subscribe(() => {
-            this.router.navigate([""]).then();
+        this.articlesApiService.publishDraft().subscribe((article) => {
+            this.router.navigate([`/articles/${article._id}`]).then();
         })
         // this.articlesApiService.create(this.getProcessedArticle()).subscribe(() => {
         //     this.router.navigate([""]).then();
@@ -256,8 +257,8 @@ export class ArticleFormComponent implements OnInit {
     }
 
     private updateArticle() {
-        this.articlesApiService.update(this.article!._id, this.getProcessedArticle()).subscribe(() => {
-            this.router.navigate([""]).then();
+        this.articlesApiService.update(this.article!._id, this.getProcessedArticle()).subscribe((article) => {
+            this.router.navigate([`/articles/${article._id}`]).then();
         })
     }
 

@@ -101,18 +101,15 @@ export class ArticlesService {
             throw new NotFoundException("No draft for user");
         }
         const articleToValidate = plainToInstance(CreateArticleDto, draft.toObject());
-        console.log(articleToValidate)
         const errors = await validate(articleToValidate);
-        console.log(errors[0]);
         if (errors.length > 0) {
-            // const messages = errors.map(err => Object.values(err.constraints)).flat();
-            // throw new BadRequestException(messages);
             const messages = this.extractMessages(errors);
             if (messages.length > 0) {
                 throw new BadRequestException(messages);
             }
         }
         draft.status = ArticleStatus.PUBLISHED;
+        draft.authorId = null;
         let user = await this.userRepository.findOneBy({
             id: userId
         })

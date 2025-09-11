@@ -1,12 +1,17 @@
-<!-- <a [href]="link" class="submit-button" (click)="handleClick()"><ng-content></ng-content></a> -->
 @if (buttonType === "link") {
-    <a [href]="link" class="submit-button" (click)="handleClick()">
+    <a 
+    [href]="link" class="submit-button" 
+    [ngClass]="{'danger': buttonStyle === 'danger', 'small': buttonOutline === 'small'}" 
+    (click)="handleClick()">
         <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     </a>
 }
 @else {
-    <button [type]="buttonType" class="submit-button" (click)="handleClick()">
+    <button 
+    [type]="buttonType" 
+    class="submit-button" 
+    [ngClass]="{'danger': buttonStyle === 'danger', 'small': buttonOutline === 'small'}" 
+    (click)="handleClick()">
         <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     </button>
 }
-
