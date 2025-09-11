@@ -9,7 +9,7 @@ import {ArticleUpdateService} from "../../article-update/services/article-update
 import {ArchivedArticle} from "../../archived-articles/entities/archived-article";
 import {InjectRepository} from "@nestjs/typeorm";
 import {History} from "../../history/entities/history";
-import {Repository} from "typeorm";
+import {DataSource, Repository} from "typeorm";
 import {User} from "../../users/entities/user";
 import {CollectionDto, DocumentCollector} from "@forlagshuset/nestjs-mongoose-paginate";
 import {CreateDraftDto} from "../dtos/create-draft-dto";
@@ -23,7 +23,8 @@ export class ArticlesService {
                 @InjectModel(ArchivedArticle.name) private readonly archivedArticleModel: Model<ArchivedArticle>,
                 @InjectRepository(History) private readonly historyRepository: Repository<History>,
                 @InjectRepository(User) private readonly userRepository: Repository<User>,
-                private readonly articleUpdateService: ArticleUpdateService) {
+                private readonly articleUpdateService: ArticleUpdateService,
+                private dataSource: DataSource,) {
     }
     getAll(collectionDto: CollectionDto) {
         const collector = new DocumentCollector<Article>(this.articleModel);
@@ -108,17 +109,30 @@ export class ArticlesService {
                 throw new BadRequestException(messages);
             }
         }
-        draft.status = ArticleStatus.PUBLISHED;
-        draft.authorId = null;
-        let user = await this.userRepository.findOneBy({
-            id: userId
-        })
-        let history = new History();
-        history.user = user;
-        history.articleId = draft.id;
-        history.actionType = ActionTypes.Creation;
-        await this.historyRepository.save(history);
-        return draft.save();
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        try {
+            draft.status = ArticleStatus.PUBLISHED;
+            draft.authorId = null;
+            let user = await this.userRepository.findOneBy({
+                id: userId
+            })
+            let history = new History();
+            history.user = user;
+            history.articleId = draft.id;
+            history.actionType = ActionTypes.Creation;
+            await this.historyRepository.save(history);
+            const newDraft = await draft.save();
+            await queryRunner.commitTransaction();
+            return newDraft;
+        } catch (error) {
+            await queryRunner.rollbackTransaction();
+            throw error;
+        } finally {
+            await queryRunner.release();
+        }
+
     }
 
     private extractMessages(errors: ValidationError[]): string[] {

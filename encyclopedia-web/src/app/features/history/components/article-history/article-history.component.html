@@ -1,0 +1,5 @@
+@for (historyRecord of (historyService.history | async); track $index) {
+    <div>
+        {{historyRecord.actionDate}}
+    </div>
+}

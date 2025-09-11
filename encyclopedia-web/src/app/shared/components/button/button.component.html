@@ -1,7 +1,7 @@
 @if (buttonType === "link") {
     <a 
     [href]="link" class="submit-button" 
-    [ngClass]="{'danger': buttonStyle === 'danger', 'small': buttonOutline === 'small'}" 
+    [ngClass]="{'danger': buttonStyle === 'danger', 'success': buttonStyle === 'success', 'small': buttonOutline === 'small'}" 
     (click)="handleClick()">
         <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     </a>
@@ -10,7 +10,7 @@
     <button 
     [type]="buttonType" 
     class="submit-button" 
-    [ngClass]="{'danger': buttonStyle === 'danger', 'small': buttonOutline === 'small'}" 
+    [ngClass]="{'danger': buttonStyle === 'danger', 'success': buttonStyle === 'success', 'small': buttonOutline === 'small'}" 
     (click)="handleClick()">
         <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     </button>

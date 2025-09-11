@@ -11,7 +11,7 @@ export class ButtonComponent {
 
     @Input() buttonText = "";
     @Input() buttonType: "submit" | "button" | "link" = "button";
-    @Input() buttonStyle: "default" | "danger" = "default";
+    @Input() buttonStyle: "default" | "danger" | "success" = "default";
     @Input() buttonOutline: "big" | "small" = "big";
     @Input() link = "";
     @Output() clickEvent = new EventEmitter();

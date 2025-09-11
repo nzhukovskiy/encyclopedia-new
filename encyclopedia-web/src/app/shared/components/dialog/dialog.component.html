@@ -1,12 +1,12 @@
 <div class="dialog-container">
     <h3>Вы уверены?</h3>
     <div class="dialog-buttons-group">
-        <app-button (clickEvent)="closeWithAccept()">
+        <app-button (clickEvent)="closeWithAccept()" [buttonStyle]="'success'">
             <ng-template>
                 <mat-icon>check</mat-icon>Подтвердить
             </ng-template>
         </app-button>
-        <app-button (clickEvent)="closeWithReject()">
+        <app-button (clickEvent)="closeWithReject()" [buttonStyle]="'danger'">
             <ng-template>
                 <mat-icon>close</mat-icon>Отклонить
             </ng-template>
