@@ -1,10 +1,17 @@
 <div class="article-title-container">
     <h2>{{article?.title}}</h2>
-    <app-button class="add-resource-btn" [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
-        <ng-template>
-            <mat-icon>edit</mat-icon>Редактировать
-        </ng-template>
-    </app-button>
+    <div class="article-controls">
+        <app-button class="add-resource-btn" [buttonType]="'link'" [link]="'update'">
+            <ng-template>
+                <mat-icon>edit</mat-icon>Редактировать
+            </ng-template>
+        </app-button>
+        <app-button class="add-resource-btn" [buttonType]="'link'" [link]="'history'">
+            <ng-template>
+                <mat-icon>history</mat-icon>История
+            </ng-template>
+        </app-button>
+    </div>
 </div>
 
 @if (article?.appointments?.length) {
@@ -105,9 +112,11 @@
 
 
 
-<p [innerHTML]="articleBody"></p>
-<app-button class="add-resource-btn" (clickEvent)="deleteArticle()">
-    <ng-template>
-        <mat-icon>delete</mat-icon>Удалить
-    </ng-template>
-</app-button>
+<div class="article-body" [innerHTML]="articleBody"></div>
+<div class="delete-button">
+    <app-button (clickEvent)="deleteArticle()" [buttonStyle]="'danger'">
+        <ng-template>
+            <mat-icon>delete</mat-icon>Удалить
+        </ng-template>
+    </app-button>
+</div>

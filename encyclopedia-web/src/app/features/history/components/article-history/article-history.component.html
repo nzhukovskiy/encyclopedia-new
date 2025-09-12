@@ -1,5 +1,17 @@
-@for (historyRecord of (historyService.history | async); track $index) {
-    <div>
-        {{historyRecord.actionDate}}
-    </div>
-}
+<h1>
+    История правок
+</h1>
+<div class="all-history">
+    @for (historyRecord of (historyService.history | async); track $index) {
+        <a [routerLink]="[`/history/${historyRecord.id}`]" class="history-card">
+            <div class="history-metadata">
+                <div class="user-info">
+                    {{historyRecord.user.firstName}} {{historyRecord.user.lastName}} 
+                </div>
+                <div class="history-date">
+                    {{historyRecord.actionDate | date:"d.LL.y в H:mm"}}
+                </div>
+            </div>
+        </a>
+    }   
+</div>

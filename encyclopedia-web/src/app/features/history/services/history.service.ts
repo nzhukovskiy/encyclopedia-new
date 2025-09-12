@@ -13,6 +13,9 @@ export class HistoryService {
     private $history = new BehaviorSubject<History[]>([]);
     history = this.$history.asObservable();
 
+    private $currentHistory = new BehaviorSubject<History | null>(null);
+    currentHistory = this.$currentHistory.asObservable();
+
 
     loadHistory(articleId: string, forceReload = false) {
         if (this.$history.value.length && !forceReload) {
@@ -21,5 +24,9 @@ export class HistoryService {
         this.historyApiService.getForArticle(articleId).subscribe(history => {
             this.$history.next(history);
         })
+    }
+
+    setCurrentHistory(history: History) {
+        this.$currentHistory.next(history);
     }
 }

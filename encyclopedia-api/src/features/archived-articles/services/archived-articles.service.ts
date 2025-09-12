@@ -8,7 +8,6 @@ import {History} from "../../history/entities/history";
 import {Repository} from "typeorm";
 import {Article} from "../../articles/schemas/article";
 import {ArticleUpdateService} from "../../article-update/services/article-update.service";
-import {UpdateArticleDto} from "../../articles/dtos/update-article.dto";
 import {ActionTypes} from "../../history/constants/action-types";
 
 @Injectable()
@@ -16,8 +15,7 @@ export class ArchivedArticlesService {
     constructor(@InjectModel(ArchivedArticle.name) private archivedArticleModel: Model<ArchivedArticle>,
                 @InjectRepository(History) private readonly historyRepository: Repository<History>,
                 @InjectModel(Article.name) private readonly articleModel: Model<Article>,
-                private readonly articleUpdateService: ArticleUpdateService
-                /*private readonly articlesService: ArticlesService*/) {
+                private readonly articleUpdateService: ArticleUpdateService) {
     }
 
     async create(createArticleDto: CreateArticleDto) {
@@ -37,12 +35,8 @@ export class ArchivedArticlesService {
                 {nextArticleId: articleToRestore._id.toString()}
             ]
         })
-        let articleDto: UpdateArticleDto = {
-            title: articleToRestore.title,
-            body: articleToRestore.body,
-            birth: articleToRestore.birth,
-            death: articleToRestore.death,
-        };
+        let articleDto = articleToRestore.toObject()
+        delete articleDto._id;
         return await this.articleUpdateService.update(articleDto, userId, history.articleId, ActionTypes.Restoring);
     }
 }

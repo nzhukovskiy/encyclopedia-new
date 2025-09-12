@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {authGuard} from './core/guards/auth.guard';
 import {articleResolver} from "./features/articles/resolvers/article.resolver";
+import {historyResolver} from './features/history/resolvers/history.resolver';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/articles/components/article-page/article-page.component').then(c => c.ArticlePageComponent),
         canActivate: [authGuard],
         resolve: {article: articleResolver}
+    },
+    {
+        path: "history/:id",
+        loadComponent: () => import('./features/history/components/single-history-page/single-history-page.component').then(c => c.SingleHistoryPageComponent),
+        canActivate: [authGuard],
+        resolve: {history: historyResolver}
     },
     {
         path: "",

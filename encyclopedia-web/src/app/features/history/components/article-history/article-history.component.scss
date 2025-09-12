@@ -1,0 +1,23 @@
+h1 {
+    margin-bottom: 20px;
+}
+.all-history {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.history-card {
+    margin: 5px;
+    padding: 25px;
+    box-shadow: 0 0 8px rgb(190, 190, 190);
+
+    .history-metadata {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .user-info {
+            font-weight: bold;
+        }
+    }
+}

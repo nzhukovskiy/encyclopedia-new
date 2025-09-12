@@ -21,8 +21,19 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
+    .article-controls {
+        display: flex;
+        gap: 15px;
+    }
 }
 .section-title {
     text-align: center;
     background-color: #eaecf0;
+}
+.delete-button {
+    max-width: 250px;
+}
+.article-body {
+    margin-top: 20px;
 }

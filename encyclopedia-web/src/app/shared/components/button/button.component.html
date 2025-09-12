@@ -1,6 +1,6 @@
 @if (buttonType === "link") {
     <a 
-    [href]="link" class="submit-button" 
+    [routerLink]="[link]" class="submit-button" 
     [ngClass]="{'danger': buttonStyle === 'danger', 'success': buttonStyle === 'success', 'small': buttonOutline === 'small'}" 
     (click)="handleClick()">
         <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>

@@ -9,5 +9,6 @@ export class PlaceAndDateDto {
     place: PlaceDto;
 
     @IsDate()
+    @Type(()=>Date)
     date: Date;
 }

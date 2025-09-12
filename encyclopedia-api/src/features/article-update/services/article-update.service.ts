@@ -20,12 +20,9 @@ export class ArticleUpdateService {
 
     async update(updateArticleDto: UpdateArticleDto, userId: number, articleId: string, reason: ActionTypes.Updating | ActionTypes.Restoring) {
         let currentArticleToBeUpdated = await this.articleModel.findById(articleId);
-        let archivedArticle = await new this.archivedArticleModel({
-            title: currentArticleToBeUpdated.title,
-            body: currentArticleToBeUpdated.body,
-            birth: currentArticleToBeUpdated.birth,
-            death: currentArticleToBeUpdated.death
-        }).save();
+        let articleObject = currentArticleToBeUpdated.toObject();
+        delete articleObject._id;
+        let archivedArticle = await new this.archivedArticleModel(articleObject).save();
         let lastHistoryRecord = (await this.historyRepository.findBy({
             articleId: articleId
         })).find(el => el.nextArticleId == null);

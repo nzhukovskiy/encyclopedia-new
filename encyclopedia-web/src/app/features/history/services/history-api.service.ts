@@ -13,4 +13,8 @@ export class HistoryApiService {
     getForArticle(articleId: string) {
         return this.httpClient.get<History[]>(`articles/${articleId}/history`);
     }
+
+    getSingleHistory(historyId: number) {
+        return this.httpClient.get<History>(`history/${historyId}`);
+    }
 }

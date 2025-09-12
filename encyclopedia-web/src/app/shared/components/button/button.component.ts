@@ -1,9 +1,10 @@
 import {CommonModule, NgTemplateOutlet} from '@angular/common';
 import {Component, ContentChild, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-button',
-  imports: [NgTemplateOutlet, CommonModule],
+  imports: [NgTemplateOutlet, CommonModule, RouterLink],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
