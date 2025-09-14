@@ -5,10 +5,12 @@ import {PlaceAndDate} from './place-and-date';
 
 export class Article {
 
-    constructor(id: string, title: string, body: string, birth: PlaceAndDate, death: PlaceAndDate, resources: Resource[], appointments: Appointment[], sections: Section[], createdAt: Date, updatedAt: Date) {
+
+    constructor(id: string, title: string, body: string, imagePath: string | null, birth: PlaceAndDate | null, death: PlaceAndDate | null, resources: Resource[], appointments: Appointment[], sections: Section[], createdAt: Date, updatedAt: Date) {
         this._id = id;
         this.title = title;
         this.body = body;
+        this.imagePath = imagePath;
         this.birth = birth;
         this.death = death;
         this.resources = resources;
@@ -21,6 +23,7 @@ export class Article {
     _id: string;
     title: string;
     body: string;
+    imagePath: string | null;
     birth: PlaceAndDate | null;
     death: PlaceAndDate | null;
     resources: Resource[];

@@ -2,7 +2,7 @@
     <div class="card-title">
         <a [href]="[`/articles/${article!._id}`]"><h2>{{article!.title}}</h2></a>
         <div class="controls">
-            <app-button [buttonType]="'link'" [link]="`articles/${article!._id}/update`">
+            <app-button [buttonType]="'link'" [link]="`/articles/${article!._id}/update`">
                 <ng-template>
                     <mat-icon>edit</mat-icon>Редактировать
                 </ng-template>

@@ -18,6 +18,15 @@
         [label]="'Текст статьи'"
         [type]="'textarea'">
     </app-form-field>
+    <div class="mb-3 image-form">
+        <label for="formFile" class="form-label">Главное изображение</label>
+        <div class="article-image-group">
+            <input #startupLogoInput (change)="onImageChanged($event)" class="form-control" type="file"
+                   id="formFile">
+            <mat-icon (click)="removeImage()">close</mat-icon>
+        </div>
+        <img #startupLogoPreview class="article-image-preview" alt="" src="">
+    </div>
     @if (showBirth) {
         <form [formGroup]="articleFormGroup.controls.birth">
             <app-form-field

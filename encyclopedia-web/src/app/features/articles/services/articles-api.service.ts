@@ -59,4 +59,12 @@ export class ArticlesApiService {
     publishDraft() {
         return this.httpClient.post<Article>(`articles/publish`, {});
     }
+
+    uploadMainImage(articleId: string, image: File | null | undefined) {
+        const formData = new FormData();
+        if (image) {
+            formData.append('mainImage', image);
+        }
+        return this.httpClient.post<Article>(`articles/${articleId}/main-image`, formData);
+    }
 }

@@ -1,16 +1,30 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Query, Request} from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    Query,
+    Request,
+    UploadedFile,
+    UseInterceptors
+} from '@nestjs/common';
 import {ArticlesService} from "../services/articles.service";
-import {CreateArticleDto} from "../dtos/create-article.dto";
 import {HistoryService} from "../../history/services/history.service";
 import {UpdateArticleDto} from "../dtos/update-article.dto";
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {
     CollectionDto,
     ValidationPipe,
-    CollectionResponse
 } from '@forlagshuset/nestjs-mongoose-paginate';
 import {ArticlePaginationProperties} from "../pagination/article-pagination-properties";
 import {CreateDraftDto} from "../dtos/create-draft-dto";
+import {FileInterceptor} from "@nestjs/platform-express";
+import {fileStorage} from "../storage/file-storage";
+import {imageFileFilter} from "../storage/image-file-filter";
 
 @ApiTags('articles')
 @ApiBearerAuth()
@@ -58,5 +72,19 @@ export class ArticlesController {
     @Delete(':id')
     delete(@Param('id') id: string) {
         return this.articlesService.delete(id);
+    }
+
+    @Post(':id/main-image')
+    @UseInterceptors(
+        FileInterceptor("mainImage", {
+            storage: fileStorage(),
+            fileFilter: imageFileFilter,
+        })
+    )
+    uploadMainImage(@UploadedFile() file: Express.Multer.File, @Param('id') id: string) {
+        if (!file) {
+            throw new BadRequestException("No file provided");
+        }
+        return this.articlesService.uploadMainImage(id, file.filename);
     }
 }

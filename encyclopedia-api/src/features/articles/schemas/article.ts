@@ -14,6 +14,9 @@ export class Article {
     body: string;
 
     @Prop()
+    imagePath: string;
+
+    @Prop()
     authorId?: string;
 
     @Prop({

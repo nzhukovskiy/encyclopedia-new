@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormType} from '../../../../core/constants/form-type';
 import {AbstractControl, Form, FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ArticlesApiService} from '../../services/articles-api.service';
@@ -17,7 +17,18 @@ import {DialogComponent} from "../../../../shared/components/dialog/dialog.compo
 import {debounceTime, distinctUntilChanged, filter, skip} from "rxjs";
 import {SubmitDialogReturn} from "../../../../shared/constants/submit-dialog-return";
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import {Bold, ClassicEditor, Essentials, Italic, Paragraph, Subscript, Superscript, Underline} from 'ckeditor5';
+import {
+    addToolbarToDropdown,
+    Bold,
+    ClassicEditor,
+    Essentials,
+    Italic,
+    Paragraph,
+    Subscript,
+    Superscript,
+    Underline
+} from 'ckeditor5';
+import {RemoteFileService} from '../../../../shared/services/remote-file.service';
 
 @Component({
     selector: 'app-article-form',
@@ -36,13 +47,16 @@ export class ArticleFormComponent implements OnInit {
     constructor(private readonly articlesApiService: ArticlesApiService,
                 private readonly router: Router,
                 private readonly route: ActivatedRoute,
-                private readonly matDialog: MatDialog) {
+                private readonly matDialog: MatDialog,
+                private readonly remoteFileService: RemoteFileService) {
 
     }
 
     formType = FormType.UPDATE;
     showBirth = false;
     showDeath = false;
+    @ViewChild('startupLogoInput') fileInput?: ElementRef;
+    @ViewChild('startupLogoPreview') imagePreview?: ElementRef;
 
     articleFormGroup = new FormGroup({
         title: new FormControl("", {nonNullable: true}),
@@ -82,6 +96,8 @@ export class ArticleFormComponent implements OnInit {
 
     })
 
+    mainImageFormControl = new FormControl<File | undefined>(undefined);
+
     article?: Article;
 
     protected readonly FormType = FormType;
@@ -112,6 +128,21 @@ export class ArticleFormComponent implements OnInit {
             return;
         }
         this.articleFormGroup.patchValue(article as any, {emitEvent: false});
+        if (article.imagePath) {
+            this.remoteFileService.getImage(`http://localhost:3000/uploads/images/${article.imagePath}`).subscribe(blobImage => {
+                let imageFullPath = article.imagePath!.split(/\\/);
+                let imageName = imageFullPath![imageFullPath!.length - 1];
+                let image = new File([blobImage], imageName, { type: blobImage.type || 'image/jpeg' });
+                this.mainImageFormControl.patchValue(image);
+                let fileList = new DataTransfer();
+                fileList.items.add(image);
+                this.fileInput!.nativeElement.files = fileList.files;
+                this.fileInput!.nativeElement.dispatchEvent(new Event('change'));
+            });
+        }
+        else {
+            this.mainImageFormControl.patchValue(null);
+        }
         if (article.birth) {
             this.showBirth = true;
         }
@@ -247,18 +278,50 @@ export class ArticleFormComponent implements OnInit {
         }
     }
 
+    onImageChanged(event: Event) {
+        const file = (event.target as HTMLInputElement).files![0];
+        if (file) {
+            let reader = new FileReader();
+            reader.addEventListener('load', () => {
+                this.imagePreview!.nativeElement.src = reader.result;
+            });
+            reader.readAsDataURL(file);
+        } else {
+            this.imagePreview!.nativeElement.src = '';
+        }
+        this.mainImageFormControl.patchValue(file);
+    }
+
+    removeImage() {
+        let fileList = new DataTransfer();
+        this.fileInput!.nativeElement.files = fileList.files;
+        this.fileInput!.nativeElement.dispatchEvent(new Event('change'));
+        this.mainImageFormControl.patchValue(null);
+    }
+
     private createArticle() {
         this.articlesApiService.publishDraft().subscribe((article) => {
-            this.router.navigate([`/articles/${article._id}`]).then();
+            this.uploadImage(article._id);
         })
-        // this.articlesApiService.create(this.getProcessedArticle()).subscribe(() => {
-        //     this.router.navigate([""]).then();
-        // })
+    }
+
+    uploadImage(articleId: string) {
+        if (this.mainImageFormControl.getRawValue()) {
+            this.articlesApiService.uploadMainImage(articleId, this.mainImageFormControl.getRawValue()).subscribe(() => {
+                this.navigateToArticlePage(articleId);
+            });
+        } else {
+            this.navigateToArticlePage(articleId);
+        }
+    };
+
+    private navigateToArticlePage(articleId: string) {
+        this.router.navigate([`/articles/${articleId}`]).then();
     }
 
     private updateArticle() {
         this.articlesApiService.update(this.article!._id, this.getProcessedArticle()).subscribe((article) => {
-            this.router.navigate([`/articles/${article._id}`]).then();
+            this.uploadImage(this.article!._id);
         })
     }
 
@@ -271,6 +334,7 @@ export class ArticleFormComponent implements OnInit {
     private getProcessedArticle() {
         const article = this.articleFormGroup.getRawValue();
         return {...article,
+            imagePath: this.mainImageFormControl.getRawValue() ? this.article?.imagePath : null,
             birth: this.showBirth ? article.birth : null,
             death: this.showDeath ? article.death : null}
     }

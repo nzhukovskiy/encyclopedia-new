@@ -165,4 +165,8 @@ export class ArticlesService {
         }
         await this.articleModel.findByIdAndDelete(articleId);
     }
+
+    async uploadMainImage(articleId: string, imagePath: string) {
+        return this.articleModel.updateOne({_id: articleId}, {$set: {imagePath: imagePath}});
+    }
 }

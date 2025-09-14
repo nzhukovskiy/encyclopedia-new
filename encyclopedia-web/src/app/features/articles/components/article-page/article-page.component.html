@@ -13,7 +13,15 @@
         </app-button>
     </div>
 </div>
-
+@if (article?.imagePath) {
+    <table class="article-table">
+        <tr>
+            <td class="image-cell">
+                <img class="main-image" [src]="`http://localhost:3000/uploads/images/${article?.imagePath}`">
+            </td>
+        </tr>
+    </table>
+}
 @if (article?.appointments?.length) {
     <table class="article-table">
         @for (appointment of article?.appointments; track $index) {
