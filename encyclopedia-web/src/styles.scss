@@ -35,3 +35,13 @@ html, body { height: 100%; }
 .error-message {
     color: #e53e3e;
 }
+
+.image-dialog-panel .mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: transparent;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.image-dialog-backdrop {
+    background-color: rgba(0, 0, 0, 0.75);
+}

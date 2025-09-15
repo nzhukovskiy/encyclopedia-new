@@ -19,7 +19,7 @@
     <div class="main-info">
         <div class="article-image">
             @if (article?.imagePath) {
-                <img [src]="`http://localhost:3000/uploads/images/${article?.imagePath}`">
+                <img appImageViewer [src]="`http://localhost:3000/uploads/images/${article?.imagePath}`">
             }
             @else {
                 <img src="assets/no-image-placeholder.jpg">
@@ -27,10 +27,10 @@
         </div>
         <div>
             @if (article!.body!.length > 50) {
-                {{article?.body?.substring(0, 50)+ "..."}}
+                <div [innerHTML]="article?.body?.substring(0, 50)+ '...'"></div>
             }
             @else {
-                {{article?.body?.substring(0, 50)}}
+                <div [innerHTML]="article?.body?.substring(0, 50)"></div>
             }
         </div>
     </div>

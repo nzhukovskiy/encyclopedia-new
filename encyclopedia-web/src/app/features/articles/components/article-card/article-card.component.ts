@@ -4,12 +4,14 @@ import {ButtonComponent} from "../../../../shared/components/button/button.compo
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../../../shared/components/dialog/dialog.component";
-import {filter, switchMap} from "rxjs";
+import {filter} from "rxjs";
 import {SubmitDialogReturn} from "../../../../shared/constants/submit-dialog-return";
+import { ImageHolderComponent } from '../../../../shared/components/image-holder/image-holder.component';
+import { ImageViewerDirective } from "../../../../core/directives/image-viewer.directive";
 
 @Component({
     selector: 'app-article-card',
-    imports: [ButtonComponent, MatIconModule],
+    imports: [ButtonComponent, MatIconModule, ImageHolderComponent, ImageViewerDirective],
     templateUrl: './article-card.component.html',
     styleUrl: './article-card.component.scss'
 })
