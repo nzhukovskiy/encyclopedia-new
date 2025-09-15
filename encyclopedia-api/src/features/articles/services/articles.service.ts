@@ -169,4 +169,12 @@ export class ArticlesService {
     async uploadMainImage(articleId: string, imagePath: string) {
         return this.articleModel.updateOne({_id: articleId}, {$set: {imagePath: imagePath}});
     }
+
+    async uploadBodyImage(articleId: string, imagePath: string) {
+        return {
+            uploaded: 1,
+            fileName: imagePath,
+            url: `http://localhost:3000/uploads/${imagePath}`
+        };
+    }
 }

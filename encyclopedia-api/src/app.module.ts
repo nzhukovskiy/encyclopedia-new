@@ -16,6 +16,7 @@ import {TokenModule} from './features/token/token.module';
 import {ArticleUpdateModule} from './features/article-update/article-update.module';
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {join} from 'path';
+import {ImagesModule} from "./features/images/images.module";
 
 
 @Module({
@@ -50,7 +51,8 @@ import {join} from 'path';
         HistoryModule,
         ArchivedArticlesModule,
         TokenModule,
-        ArticleUpdateModule
+        ArticleUpdateModule,
+        ImagesModule
     ],
     controllers: [AppController],
     providers: [AppService, TokenService],
