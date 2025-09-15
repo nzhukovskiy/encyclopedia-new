@@ -21,6 +21,8 @@ export class ImageViewerDirective {
 
         this.dialog.open(ImageHolderComponent, {
             data: {src, alt},
+            maxWidth: '95vw',
+            maxHeight: '95vh',
             panelClass: 'image-dialog-panel',
             backdropClass: 'image-dialog-backdrop'
         });
