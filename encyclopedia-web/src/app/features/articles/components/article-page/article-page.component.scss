@@ -4,8 +4,8 @@
     tr, td {
         border-width: 1px;
     }
-    
-    
+
+
     p {
         text-align: center;
     }
@@ -37,6 +37,16 @@
 .article-body {
     margin-top: 20px;
 }
+:host ::ng-deep .article-body figure {
+    display: flex;
+    justify-content: center;
+
+    img {
+        max-width: 80%;
+        height: auto;
+    }
+}
+
 .main-image {
     max-width: 50%;
     margin: 0 auto;

@@ -11,6 +11,19 @@
         display: flex;
         gap: 15px;
     }
+
+    .article-image {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    }
 }
 .main-info {
     display: flex;

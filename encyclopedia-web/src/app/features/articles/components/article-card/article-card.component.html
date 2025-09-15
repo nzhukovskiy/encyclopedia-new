@@ -18,7 +18,12 @@
 
     <div class="main-info">
         <div class="article-image">
-            <img height="150" src="assets/no-image-placeholder.jpg">
+            @if (article?.imagePath) {
+                <img [src]="`http://localhost:3000/uploads/images/${article?.imagePath}`">
+            }
+            @else {
+                <img src="assets/no-image-placeholder.jpg">
+            }
         </div>
         <div>
             @if (article!.body!.length > 50) {
