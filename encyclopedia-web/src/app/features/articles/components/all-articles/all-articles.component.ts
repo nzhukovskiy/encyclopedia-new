@@ -12,6 +12,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { ButtonComponent } from "../../../../shared/components/button/button.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import {isCaptureEventType} from '@angular/core/primitives/event-dispatch';
 
 @Component({
   selector: 'app-all-articles',
@@ -40,13 +41,15 @@ export class AllArticlesComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.articlesService.loadArticles();
         this.route.queryParams.subscribe(params => {
             const title = params['title'] || "";
+            this.title = title;
+            const page = params['page'] || 0;
+            const limit = params['limit'] || 10;
             this.articlesService.loadArticles(
                 new ArticleFilterParams(title, {
-                    page: 0,
-                    limit: 10,
+                    page: page,
+                    limit: limit,
                     total: 0
                 }),
                 true);
@@ -61,17 +64,16 @@ export class AllArticlesComponent implements OnInit {
             },
             queryParamsHandling: 'merge',
         }).then();
-        // this.articlesService.loadArticles(new ArticleFilterParams(title), true);
     }
 
     handlePageChange(event: PageEvent) {
-        this.articlesService.loadArticles(
-            new ArticleFilterParams(this.title, {
+        this.router.navigate([], {
+            queryParams: {
                 page: event.pageIndex,
-                limit: event.pageSize,
-                total: 0
-            }),
-            true);
+                limit: event.pageSize
+            },
+            queryParamsHandling: 'merge',
+        }).then();
     }
 
     handleDeletion(articleId: string) {

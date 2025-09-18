@@ -10,7 +10,7 @@
         </ng-template>
     </app-button>
 </div>
-<app-searchbar (searchEvent)="searchByTitle($event)"></app-searchbar>
+<app-searchbar [value]="title" (searchEvent)="searchByTitle($event)"></app-searchbar>
 <div class="articles-list">
     @for (article of (articles$ | async)!.data; track article.title) {
         <app-article-card [article]="article" (deleteEvent)="handleDeletion($event)"></app-article-card>
@@ -19,7 +19,7 @@
 <mat-paginator class="startups-paginator" [length]="(articles$ | async)?.pagination?.total"
                [pageIndex]="(articles$ | async)?.pagination?.page"
                [pageSize]="(articles$ | async)?.pagination?.limit"
-               [pageSizeOptions]="[5, 8, 10, 25, 100]"
+               [pageSizeOptions]="[5, 10, 25, 100]"
                (page)="handlePageChange($event)"
                aria-label="Select page">
 </mat-paginator>
