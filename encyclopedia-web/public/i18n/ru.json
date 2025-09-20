@@ -17,5 +17,15 @@
         "lastName" : {
             "required": "Необходимо ввести фамилию"
         }
+    },
+    "text-constants": {
+        "history": {
+            "actions": {
+                "create": "Создание",
+                "update": "Обновление",
+                "delete": "Удаление",
+                "restore": "Восстановление"
+            }
+        }
     }
 }

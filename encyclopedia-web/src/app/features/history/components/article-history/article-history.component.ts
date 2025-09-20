@@ -3,10 +3,11 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {HistoryService} from '../../services/history.service';
 import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-article-history',
-    imports: [AsyncPipe, DatePipe, CommonModule, RouterLink, MatIconModule],
+    imports: [AsyncPipe, DatePipe, CommonModule, RouterLink, MatIconModule, TranslatePipe],
     templateUrl: './article-history.component.html',
     styleUrl: './article-history.component.scss'
 })

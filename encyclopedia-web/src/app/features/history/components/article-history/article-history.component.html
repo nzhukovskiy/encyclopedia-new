@@ -3,15 +3,31 @@
 </h1>
 <div class="all-history">
     @for (historyRecord of (historyService.history | async); track $index) {
-        <a [routerLink]="[`/history/${historyRecord.id}`]" class="history-card">
+        <a [routerLink]="[`/history/${historyRecord.id}`]" class="history-card" [ngClass]="'action-' + historyRecord.actionType.toString()">
+            <div class="right-line">
+            </div>
+            <div class="user-avatar">
+                {{historyRecord.user.firstName.charAt(0)}}{{historyRecord.user.lastName.charAt(0)}}
+            </div>
             <div class="history-metadata">
                 <div class="user-info">
-                    {{historyRecord.user.firstName}} {{historyRecord.user.lastName}} 
+                    <div>
+                        {{historyRecord.user.firstName}} {{historyRecord.user.lastName}} 
+                    </div>
+                    <div class="history-action-badge">
+                        @switch (historyRecord.actionType) {
+                            @case (0) { <span> {{"text-constants.history.actions.create" | translate }}</span> }
+                            @case (1) { <span> {{"text-constants.history.actions.update" | translate }}</span> }
+                            @case (2) { <span> {{"text-constants.history.actions.delete" | translate }}</span> }
+                            @case (3) { <span> {{"text-constants.history.actions.restore" | translate }}</span> }
+                        }
+                    </div>
                 </div>
                 <div class="history-date">
                     {{historyRecord.actionDate | date:"d.LL.y в H:mm"}}
                 </div>
             </div>
+            
         </a>
     }   
 </div>
