@@ -25,6 +25,7 @@ import {CreateDraftDto} from "../dtos/create-draft-dto";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {fileStorage} from "../storage/file-storage";
 import {imageFileFilter} from "../storage/image-file-filter";
+import {Paginate, PaginateQuery} from "nestjs-paginate";
 
 @ApiTags('articles')
 @ApiBearerAuth()
@@ -60,8 +61,8 @@ export class ArticlesController {
     }
 
     @Get(':id/history')
-    getForArticle(@Param('id') id: string) {
-        return this.historyService.getForArticle(id);
+    getForArticle(@Param('id') id: string, @Paginate() query: PaginateQuery) {
+        return this.historyService.getForArticle(id, query);
     }
 
     @Put(':id')

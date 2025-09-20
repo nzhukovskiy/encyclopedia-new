@@ -7,6 +7,7 @@ import {Article} from "../../articles/schemas/article";
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
 import {User} from "../../users/entities/user";
+import {paginate, PaginateQuery} from "nestjs-paginate";
 
 @Injectable()
 export class HistoryService {
@@ -37,18 +38,29 @@ export class HistoryService {
         );
     }
 
-    async getForArticle(articleId: string) {
-        return Promise.all((await this.historyRepository.find({
-            where: {
-                articleId: articleId
-            },
-            relations: {
-                user: true
-            }
-        })).map(({previousArticleId,
-                      nextArticleId,
-                      articleId,
-                      ...el}) => el))
+    async getForArticle(articleId: string, query: PaginateQuery) {
+        const queryBuilder = this.historyRepository.createQueryBuilder('history')
+            .leftJoinAndSelect('history.user', 'user')
+            .where('history.articleId = :articleId', { articleId });
+        const result = await paginate(query, queryBuilder, {
+            sortableColumns: ['actionDate'],
+            defaultSortBy: [['actionDate', 'DESC']],
+            relations: ['user'],
+        });
+        result.data = result.data.map(({ previousArticleId, nextArticleId, articleId, ...el }) => el as History);
+
+        return result;
+        // return Promise.all((await this.historyRepository.find({
+        //     where: {
+        //         articleId: articleId
+        //     },
+        //     relations: {
+        //         user: true
+        //     }
+        // })).map(({previousArticleId,
+        //               nextArticleId,
+        //               articleId,
+        //               ...el}) => el))
     }
 
     async get(historyId: number) {
