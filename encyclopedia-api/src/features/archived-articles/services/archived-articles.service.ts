@@ -8,7 +8,7 @@ import {History} from "../../history/entities/history";
 import {Repository} from "typeorm";
 import {Article} from "../../articles/schemas/article";
 import {ArticleUpdateService} from "../../article-update/services/article-update.service";
-import {ActionTypes} from "../../history/constants/action-types";
+import {ActionType} from "../../history/constants/action-type";
 
 @Injectable()
 export class ArchivedArticlesService {
@@ -37,6 +37,6 @@ export class ArchivedArticlesService {
         })
         let articleDto = articleToRestore.toObject()
         delete articleDto._id;
-        return await this.articleUpdateService.update(articleDto, userId, history.articleId, ActionTypes.Restoring);
+        return await this.articleUpdateService.update(articleDto, userId, history.articleId, ActionType.Restoring);
     }
 }

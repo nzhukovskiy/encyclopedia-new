@@ -17,6 +17,7 @@ import {ArticleUpdateModule} from './features/article-update/article-update.modu
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {join} from 'path';
 import {ImagesModule} from "./features/images/images.module";
+import {entities} from "./config/constants";
 
 
 @Module({
@@ -34,8 +35,8 @@ import {ImagesModule} from "./features/images/images.module";
             useFactory: (configService: ConfigService) => ({
                 type: 'postgres',
                 url: configService.get("POSTGRES_URL"),
-                entities: [User, History],
-                synchronize: true,
+                entities: entities,
+                synchronize: false,
             }),
         }),
         MongooseModule.forRootAsync({

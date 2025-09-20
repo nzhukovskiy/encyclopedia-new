@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {ActionTypes} from "../constants/action-types";
+import {ActionType} from "../constants/action-type";
 import {User} from "../../users/entities/user";
 
 @Entity()
@@ -16,8 +16,11 @@ export class History {
     @CreateDateColumn()
     actionDate: Date;
 
-    @Column()
-    actionType: ActionTypes;
+    @Column({
+        type: "enum",
+        enum: ActionType
+    })
+    actionType: ActionType;
 
     @Column({
         nullable: true

@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {HistoryFilterParams} from '../../models/history-filter-params';
+import { ActionType } from '../../constants/action-type';
 
 @Component({
     selector: 'app-article-history',
@@ -18,6 +19,8 @@ export class ArticleHistoryComponent implements OnInit {
                 protected readonly historyService: HistoryService,
                 private readonly router: Router) {
     }
+
+    protected readonly actionType = ActionType;
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(params => {

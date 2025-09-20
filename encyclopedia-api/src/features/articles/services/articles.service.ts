@@ -4,7 +4,7 @@ import {Article} from "../schemas/article";
 import {Error, FilterQuery, Model} from "mongoose";
 import {CreateArticleDto} from "../dtos/create-article.dto";
 import {UpdateArticleDto} from "../dtos/update-article.dto";
-import {ActionTypes} from "../../history/constants/action-types";
+import {ActionType} from "../../history/constants/action-type";
 import {ArticleUpdateService} from "../../article-update/services/article-update.service";
 import {ArchivedArticle} from "../../archived-articles/entities/archived-article";
 import {InjectRepository} from "@nestjs/typeorm";
@@ -80,7 +80,7 @@ export class ArticlesService {
         let history = new History();
         history.user = user;
         history.articleId = newArticle.id;
-        history.actionType = ActionTypes.Creation;
+        history.actionType = ActionType.Creation;
         await this.historyRepository.save(history);
         return newArticle.save();
     }
@@ -121,7 +121,7 @@ export class ArticlesService {
             let history = new History();
             history.user = user;
             history.articleId = draft.id;
-            history.actionType = ActionTypes.Creation;
+            history.actionType = ActionType.Creation;
             await this.historyRepository.save(history);
             const newDraft = await draft.save();
             await queryRunner.commitTransaction();
@@ -151,7 +151,7 @@ export class ArticlesService {
     }
 
     async update(updateArticleDto: UpdateArticleDto, userId: number, articleId: string) {
-        return this.articleUpdateService.update(updateArticleDto, userId, articleId, ActionTypes.Updating);
+        return this.articleUpdateService.update(updateArticleDto, userId, articleId, ActionType.Updating);
     }
 
     async delete(articleId: string) {

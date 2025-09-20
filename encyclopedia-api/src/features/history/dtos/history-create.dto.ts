@@ -1,11 +1,11 @@
-import {ActionTypes} from "../constants/action-types";
+import {ActionType} from "../constants/action-type";
 
 export class HistoryCreateDto {
     userId: number;
 
     articleId: string;
 
-    actionType: ActionTypes;
+    actionType: ActionType;
 
     previousArticleId?: string;
 

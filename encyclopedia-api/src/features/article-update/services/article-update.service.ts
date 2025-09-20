@@ -7,7 +7,7 @@ import {History} from "../../history/entities/history";
 import {Repository} from "typeorm";
 import {ArchivedArticle} from "../../archived-articles/entities/archived-article";
 import {UpdateArticleDto} from "../../articles/dtos/update-article.dto";
-import {ActionTypes} from "../../history/constants/action-types";
+import {ActionType} from "../../history/constants/action-type";
 import {User} from "../../users/entities/user";
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ArticleUpdateService {
                 @InjectModel(ArchivedArticle.name) private archivedArticleModel: Model<ArchivedArticle>) {
     }
 
-    async update(updateArticleDto: UpdateArticleDto, userId: number, articleId: string, reason: ActionTypes.Updating | ActionTypes.Restoring) {
+    async update(updateArticleDto: UpdateArticleDto, userId: number, articleId: string, reason: ActionType.Updating | ActionType.Restoring) {
         let currentArticleToBeUpdated = await this.articleModel.findById(articleId);
         let articleObject = currentArticleToBeUpdated.toObject();
         delete articleObject._id;

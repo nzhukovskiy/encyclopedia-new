@@ -37,25 +37,25 @@ h1 {
         }
     }
 
-    &.action-0 {
+    &.action-creation {
         .history-action-badge, .right-line {
             background-color: lighten(#28a745, 15%);
         }
     }
 
-    &.action-1 {
+    &.action-updating {
         .history-action-badge, .right-line {
             background-color: lighten(#007bff, 15%);
         }
     }
 
-    &.action-2 {
+    &.action-deleting {
         .history-action-badge, .right-line {
             background-color: lighten(#dc3545, 15%);
         }
     }
 
-    &.action-3 {
+    &.action-restoring {
         .history-action-badge, .right-line {
             background-color: lighten(#6f42c1, 15%);
         }
