@@ -1,6 +1,12 @@
-<h1>
-    История правок
-</h1>
+<div class="history-title">
+    <h1>
+        История правок
+    </h1>
+    <select class="form-select" [formControl]="sortBy">
+        <option [value]="'actionDate:DESC'">Сначала новые</option>
+        <option [value]="'actionDate:ASC'">Сначала старые</option>
+    </select>
+</div>
 <div class="all-history">
     @for (historyRecord of (historyService.history | async)?.data; track $index) {
         <a [routerLink]="[`/history/${historyRecord.id}`]" class="history-card" [ngClass]="'action-' + historyRecord.actionType.toLowerCase()">
@@ -12,7 +18,7 @@
             <div class="history-metadata">
                 <div class="user-info">
                     <div>
-                        {{historyRecord.user.firstName}} {{historyRecord.user.lastName}} 
+                        {{historyRecord.user.firstName}} {{historyRecord.user.lastName}}
                     </div>
                     <div class="history-action-badge">
                         @switch (historyRecord.actionType) {
@@ -27,9 +33,9 @@
                     {{historyRecord.actionDate | date:"d.LL.y в H:mm"}}
                 </div>
             </div>
-            
+
         </a>
-    }   
+    }
 </div>
 <mat-paginator class="startups-paginator" [length]="(historyService.history | async)?.pagination?.total"
                [pageIndex]="(historyService.history | async)?.pagination?.page"

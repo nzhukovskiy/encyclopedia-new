@@ -11,6 +11,8 @@ import {provideToastr} from 'ngx-toastr';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {errorInterceptor} from './core/interceptors/error.interceptor';
 import {dateInterceptor} from './core/interceptors/date.interceptor';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {PaginationRussianIntlService} from './core/services/paginator/pagination-russian-intl.service';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -26,6 +28,7 @@ export const appConfig: ApplicationConfig = {
                 suffix: '.json'
             })
         }),
+        { provide: MatPaginatorIntl, useClass: PaginationRussianIntlService },
         provideAnimations(),
         provideToastr(),
     ]

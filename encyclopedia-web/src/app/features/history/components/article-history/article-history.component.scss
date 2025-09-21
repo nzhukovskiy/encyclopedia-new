@@ -96,3 +96,14 @@ h1 {
         flex-shrink: 0;
     }
 }
+.history-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    select {
+        max-width: fit-content;
+        max-height: fit-content;
+    }
+}

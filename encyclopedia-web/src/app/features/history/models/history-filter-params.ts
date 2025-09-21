@@ -1,13 +1,12 @@
 import {PaginationData} from '../../../core/models/pagination-data';
-import {SortParams} from '../../../core/models/sort-params';
 
 export class HistoryFilterParams {
 
-    constructor(sortBy?: SortParams, pagination?: PaginationData) {
+    constructor(sortBy?: string, pagination?: PaginationData) {
         this.sortBy = sortBy;
         this.pagination = pagination;
     }
 
-    sortBy?: SortParams;
+    sortBy?: string;
     pagination?: PaginationData;
 }

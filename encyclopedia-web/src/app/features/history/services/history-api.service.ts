@@ -23,6 +23,9 @@ export class HistoryApiService {
                 params = params.append("page", historyFilterParams.pagination.page);
                 params = params.append("limit", historyFilterParams.pagination.limit);
             }
+            if (historyFilterParams.sortBy) {
+                params = params.append("sortBy", historyFilterParams.sortBy);
+            }
         }
         return this.httpClient.get<any>(`articles/${articleId}/history`, {params}).pipe(
             map((x) => this.paginationAdapterService.adaptTypeOrmResponse<History>(x))
