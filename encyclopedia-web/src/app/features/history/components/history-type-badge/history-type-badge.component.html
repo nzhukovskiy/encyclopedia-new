@@ -1,0 +1,8 @@
+<div class="history-action-badge" [ngClass]="'action-' + actionType!.toLowerCase()">
+    @switch (actionType) {
+        @case (ActionType.Creation) { <span> {{"text-constants.history.actions.create" | translate }}</span> }
+        @case (ActionType.Updating) { <span> {{"text-constants.history.actions.update" | translate }}</span> }
+        @case (ActionType.Deleting) { <span> {{"text-constants.history.actions.delete" | translate }}</span> }
+        @case (ActionType.Restoring) { <span> {{"text-constants.history.actions.restore" | translate }}</span> }
+    }
+</div>

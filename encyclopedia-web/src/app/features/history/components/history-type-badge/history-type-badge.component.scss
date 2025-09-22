@@ -1,0 +1,22 @@
+.history-action-badge {
+    color: #f4f4f4;
+    padding: 8px;
+    border-radius: 8px;
+    max-width: fit-content;
+
+    &.action-creation {
+        background-color: lighten(#28a745, 15%);
+    }
+
+    &.action-updating {
+        background-color: lighten(#007bff, 15%);
+    }
+
+    &.action-deleting {
+        background-color: lighten(#dc3545, 15%);
+    }
+
+    &.action-restoring {
+        background-color: lighten(#6f42c1, 15%);
+    }
+}

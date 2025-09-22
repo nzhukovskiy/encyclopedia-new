@@ -1,2 +1,54 @@
-{{(historyService.currentHistory | async)?.previousArticle}}
-{{(historyService.currentHistory | async)?.nextArticle}}
+<div class="history-title">
+    <h1>Правка статьи <a [routerLink]="[`/articles/${(currentHistory$ | async)?.article?._id}`]">{{(currentHistory$ | async)?.article?.title}}</a></h1>
+    <app-history-type-badge [actionType]="(currentHistory$ | async)?.actionType"></app-history-type-badge>
+</div>
+<div class="user-info">
+    <div class="user-avatar">
+        {{(currentHistory$ | async)!.user.firstName.charAt(0)}}{{(currentHistory$ | async)!.user.lastName.charAt(0)}}
+    </div>
+    <div class="user-name">
+        {{(currentHistory$ | async)!.user.firstName}} {{(currentHistory$ | async)!.user.lastName}}
+    </div>
+</div>
+<div class="action-date">
+    <mat-icon>history</mat-icon>
+    {{(currentHistory$ | async)!.actionDate | date:"d.LL.y в H:mm"}}
+</div>
+<div class="history-versions">
+    <div>
+        Предыдущая версия
+    </div>
+    <div>
+        Следующая версия
+    </div>
+</div>
+@if ((currentHistory$ | async)!.nextArticle) {
+    <!--CASE UPDATE WITH NEXT AND PREV ARTICLES-->
+    @if ((currentHistory$ | async)!.previousArticle.title !== (currentHistory$ | async)!.nextArticle.title) {
+        <ngx-side-by-side-diff
+        class="ngx-diff-light-theme"
+        [before]="(currentHistory$ | async)!.previousArticle.title"
+        [after]="(currentHistory$ | async)!.nextArticle.title"
+        [lineContextSize]="4" />
+    }
+
+    @if ((currentHistory$ | async)!.previousArticle.body !== (currentHistory$ | async)!.nextArticle.body) {
+        <ngx-side-by-side-diff
+        class="ngx-diff-light-theme"
+        [before]="htmlToText((currentHistory$ | async)!.previousArticle.body)"
+        [after]="htmlToText((currentHistory$ | async)!.nextArticle.body)"
+        [lineContextSize]="4" />
+    }
+    
+}
+@else {
+    <!--CASE LAST ARTICLE UPDATE-->
+    @if ((currentHistory$ | async)!.previousArticle.body !== (currentHistory$ | async)!.nextArticle.body) {
+        <ngx-side-by-side-diff
+        class="ngx-diff-light-theme"
+        [before]="htmlToText((currentHistory$ | async)!.previousArticle.body)"
+        [after]="htmlToText((currentHistory$ | async)!.article.body)"
+        [lineContextSize]="4" />
+    }
+
+}
