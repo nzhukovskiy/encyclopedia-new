@@ -62,8 +62,8 @@ export class HistoryDiffComponent {
     }
 
     shouldShowDiff(): boolean {
-        const prev = this.coerceEmptyToNull(this.previous);
-        const next = this.coerceEmptyToNull(this.next);
+        const prev = this.normalizeEmptyValue(this.previous);
+        const next = this.normalizeEmptyValue(this.next);
 
         if (prev === null && next === null) {
             return false;
@@ -72,17 +72,52 @@ export class HistoryDiffComponent {
         return !this.areEqual(prev, next);
     }
 
-    private coerceEmptyToNull(value: any): any {
-        return value == null || value === '' ? null : value;
+    private normalizeEmptyValue(value: any): any {
+        if (value == null) return null;
+
+        if (typeof value === 'string' && value.trim() === '') return null;
+
+        if (Array.isArray(value) && value.length === 0) return null;
+
+        if (typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === 0) return null;
+
+        return value;
     }
 
     private areEqual(a: any, b: any): boolean {
-        if (a === b) return true;
-        if (a == null && b == null) return true;
-        if (a == null || b == null) return false;
+        if (a === null && b === null) return true;
 
-        const aStr = typeof a === 'object' ? JSON.stringify(a) : String(a);
-        const bStr = typeof b === 'object' ? JSON.stringify(b) : String(b);
+        if (a === null || b === null) return false;
+
+        const aStr = this.stringifyForComparison(a);
+        const bStr = this.stringifyForComparison(b);
+
         return aStr === bStr;
+    }
+
+    private stringifyForComparison(value: any): string {
+        if (value == null) return 'null';
+
+        if (typeof value === 'object') {
+            return this.stableStringify(value);
+        }
+
+        return String(value);
+    }
+
+    private stableStringify(obj: any): string {
+        if (Array.isArray(obj)) {
+            return '[' + obj.map(item => this.stableStringify(item)).join(',') + ']';
+        }
+
+        if (typeof obj === 'object' && obj !== null) {
+            const sortedKeys = Object.keys(obj).sort();
+            const keyValuePairs = sortedKeys.map(key => {
+                return `"${key}":${this.stableStringify(obj[key])}`;
+            });
+            return `{${keyValuePairs.join(',')}}`;
+        }
+
+        return JSON.stringify(obj);
     }
 }

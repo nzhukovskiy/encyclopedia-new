@@ -1,0 +1,53 @@
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.title : ''"
+    [next]="nextArticle.title"
+    [propertyName]="'заголовок'">
+</app-history-diff>
+
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.body : ''"
+    [next]="nextArticle.body"
+    [propertyName]="'текст'"
+    [contentType]="'html'">
+</app-history-diff>
+
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.imagePath : ''"
+    [next]="nextArticle.imagePath"
+    [propertyName]="'изображение'">
+</app-history-diff>
+
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.birth : ''"
+    [next]="nextArticle.birth"
+    [propertyName]="'рождение'"
+    [contentType]="'json'">
+</app-history-diff>
+
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.death : ''"
+    [next]="nextArticle.death"
+    [propertyName]="'смерть'"
+    [contentType]="'json'">
+</app-history-diff>
+
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.resources : ''"
+    [next]="nextArticle.resources"
+    [propertyName]="'ресурсы'"
+    [contentType]="'json'">
+</app-history-diff>
+
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.appointments : ''"
+    [next]="nextArticle.appointments"
+    [propertyName]="'должности'"
+    [contentType]="'json'">
+</app-history-diff>
+
+<app-history-diff
+    [previous]="previousArticle ? previousArticle.sections : ''"
+    [next]="nextArticle.sections"
+    [propertyName]="'секции'"
+    [contentType]="'json'">
+</app-history-diff>

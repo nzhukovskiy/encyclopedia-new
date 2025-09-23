@@ -17,82 +17,23 @@
 @if ((currentHistory$ | async)!.nextArticle) {
     @if ((currentHistory$ | async)!.previousArticle) {
     <!--CASE UPDATE WITH NEXT AND PREV ARTICLES-->
-        <app-history-diff 
-            [previous]="(currentHistory$ | async)!.previousArticle.title" 
-            [next]="(currentHistory$ | async)!.nextArticle.title"
-            [propertyName]="'заголовок'">
-        </app-history-diff>
-
-        <app-history-diff 
-            [previous]="(currentHistory$ | async)!.previousArticle.body" 
-            [next]="(currentHistory$ | async)!.nextArticle.body"
-            [propertyName]="'текст'"
-            [contentType]="'html'">
-        </app-history-diff>
-
-        <app-history-diff 
-            [previous]="(currentHistory$ | async)!.previousArticle.imagePath" 
-            [next]="(currentHistory$ | async)!.nextArticle.imagePath"
-            [propertyName]="'изображение'">
-        </app-history-diff>
-
-        <app-history-diff 
-            [previous]="(currentHistory$ | async)!.previousArticle.birth" 
-            [next]="(currentHistory$ | async)!.nextArticle.birth"
-            [propertyName]="'рождение'"
-            [contentType]="'json'">
-        </app-history-diff>
-        <app-history-diff 
-            [previous]="(currentHistory$ | async)!.previousArticle.death" 
-            [next]="(currentHistory$ | async)!.nextArticle.death"
-            [propertyName]="'смерть'"
-            [contentType]="'json'">
-        </app-history-diff>
+        <app-article-properties-history 
+            [previousArticle]="(currentHistory$ | async)!.previousArticle"
+            [nextArticle]="(currentHistory$ | async)!.nextArticle">
+        </app-article-properties-history>
     }
     @else {
         <!--CASE ARTICLE CREATION-->
-        <app-history-diff 
-            [previous]="''" 
-            [next]="(currentHistory$ | async)!.nextArticle.title"
-            [propertyName]="'заголовок'">
-        </app-history-diff>
-        <app-history-diff 
-            [previous]="''" 
-            [next]="(currentHistory$ | async)!.nextArticle.body"
-            [propertyName]="'текст'"
-            [contentType]="'html'">
-        </app-history-diff>
-        <app-history-diff 
-            [previous]="''" 
-            [next]="(currentHistory$ | async)!.nextArticle.imagePath"
-            [propertyName]="'изображение'">
-        </app-history-diff>
-        <app-history-diff 
-            [previous]="''" 
-            [next]="(currentHistory$ | async)!.nextArticle.birth"
-            [propertyName]="'рождение'"
-            [contentType]="'json'">
-        </app-history-diff>
-        <app-history-diff 
-            [previous]="''" 
-            [next]="(currentHistory$ | async)!.nextArticle.death"
-            [propertyName]="'смерть'"
-            [contentType]="'json'">
-        </app-history-diff>
+        <app-article-properties-history 
+            [previousArticle]="undefined"
+            [nextArticle]="(currentHistory$ | async)!.nextArticle">
+        </app-article-properties-history>
     }
 }
 @else {
     <!--CASE LAST ARTICLE UPDATE-->
-    <app-history-diff 
-        [previous]="(currentHistory$ | async)!.previousArticle.title" 
-        [next]="(currentHistory$ | async)!.article.title"
-        [propertyName]="'текст'">
-    </app-history-diff>
-    <app-history-diff 
-        [previous]="(currentHistory$ | async)!.previousArticle.body" 
-        [next]="(currentHistory$ | async)!.article.body"
-        [propertyName]="'текст'"
-        [contentType]="'html'">
-    </app-history-diff>
-
+    <app-article-properties-history 
+        [previousArticle]="(currentHistory$ | async)!.previousArticle"
+        [nextArticle]="(currentHistory$ | async)!.article">
+    </app-article-properties-history>
 }
