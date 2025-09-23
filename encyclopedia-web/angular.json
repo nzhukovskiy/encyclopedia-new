@@ -33,12 +33,16 @@
               }
             ],
             "styles": [
+                "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss",
                 "node_modules/ngx-toastr/toastr.css",
               "node_modules/ckeditor5/dist/ckeditor5.css"
             ],
-            "scripts": []
+            "scripts": [
+                "node_modules/@popperjs/core/dist/umd/popper.min.js",
+                "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -29,6 +29,7 @@
     "ckeditor5": "^46.1.0",
     "diff-match-patch-ts": "^0.6.0",
     "jwt-decode": "^4.0.0",
+    "material-icons": "^1.13.14",
     "ngx-diff": "^10.0.0",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

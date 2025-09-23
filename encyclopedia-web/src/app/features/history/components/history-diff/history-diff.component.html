@@ -1,0 +1,15 @@
+@if (shouldShowDiff()) {
+    <div class="history-versions">
+        <div>
+            Предыдущий {{propertyName}}
+        </div>
+        <div>
+            Следующий {{propertyName}}
+        </div>
+    </div>
+    <ngx-side-by-side-diff
+        class="ngx-diff-light-theme"
+        [before]="formatPropertyForDiff(previous)"
+        [after]="formatPropertyForDiff(next)"
+        [lineContextSize]="4" />
+}

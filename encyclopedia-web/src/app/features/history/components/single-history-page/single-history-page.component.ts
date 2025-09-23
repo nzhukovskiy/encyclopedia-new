@@ -7,10 +7,11 @@ import {AsyncPipe, DatePipe} from '@angular/common';
 import {SideBySideDiffComponent, UnifiedDiffComponent} from 'ngx-diff';
 import { HistoryTypeBadgeComponent } from "../history-type-badge/history-type-badge.component";
 import { MatIcon } from '@angular/material/icon';
+import { HistoryDiffComponent } from "../history-diff/history-diff.component";
 
 @Component({
   selector: 'app-single-history-page',
-  imports: [AsyncPipe, UnifiedDiffComponent, SideBySideDiffComponent, RouterLink, HistoryTypeBadgeComponent, DatePipe, MatIcon],
+  imports: [AsyncPipe, UnifiedDiffComponent, SideBySideDiffComponent, RouterLink, HistoryTypeBadgeComponent, DatePipe, MatIcon, HistoryDiffComponent],
   templateUrl: './single-history-page.component.html',
   styleUrl: './single-history-page.component.scss'
 })

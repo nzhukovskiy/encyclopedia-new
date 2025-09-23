@@ -14,41 +14,85 @@
     <mat-icon>history</mat-icon>
     {{(currentHistory$ | async)!.actionDate | date:"d.LL.y в H:mm"}}
 </div>
-<div class="history-versions">
-    <div>
-        Предыдущая версия
-    </div>
-    <div>
-        Следующая версия
-    </div>
-</div>
 @if ((currentHistory$ | async)!.nextArticle) {
+    @if ((currentHistory$ | async)!.previousArticle) {
     <!--CASE UPDATE WITH NEXT AND PREV ARTICLES-->
-    @if ((currentHistory$ | async)!.previousArticle.title !== (currentHistory$ | async)!.nextArticle.title) {
-        <ngx-side-by-side-diff
-        class="ngx-diff-light-theme"
-        [before]="(currentHistory$ | async)!.previousArticle.title"
-        [after]="(currentHistory$ | async)!.nextArticle.title"
-        [lineContextSize]="4" />
-    }
+        <app-history-diff 
+            [previous]="(currentHistory$ | async)!.previousArticle.title" 
+            [next]="(currentHistory$ | async)!.nextArticle.title"
+            [propertyName]="'заголовок'">
+        </app-history-diff>
 
-    @if ((currentHistory$ | async)!.previousArticle.body !== (currentHistory$ | async)!.nextArticle.body) {
-        <ngx-side-by-side-diff
-        class="ngx-diff-light-theme"
-        [before]="htmlToText((currentHistory$ | async)!.previousArticle.body)"
-        [after]="htmlToText((currentHistory$ | async)!.nextArticle.body)"
-        [lineContextSize]="4" />
+        <app-history-diff 
+            [previous]="(currentHistory$ | async)!.previousArticle.body" 
+            [next]="(currentHistory$ | async)!.nextArticle.body"
+            [propertyName]="'текст'"
+            [contentType]="'html'">
+        </app-history-diff>
+
+        <app-history-diff 
+            [previous]="(currentHistory$ | async)!.previousArticle.imagePath" 
+            [next]="(currentHistory$ | async)!.nextArticle.imagePath"
+            [propertyName]="'изображение'">
+        </app-history-diff>
+
+        <app-history-diff 
+            [previous]="(currentHistory$ | async)!.previousArticle.birth" 
+            [next]="(currentHistory$ | async)!.nextArticle.birth"
+            [propertyName]="'рождение'"
+            [contentType]="'json'">
+        </app-history-diff>
+        <app-history-diff 
+            [previous]="(currentHistory$ | async)!.previousArticle.death" 
+            [next]="(currentHistory$ | async)!.nextArticle.death"
+            [propertyName]="'смерть'"
+            [contentType]="'json'">
+        </app-history-diff>
     }
-    
+    @else {
+        <!--CASE ARTICLE CREATION-->
+        <app-history-diff 
+            [previous]="''" 
+            [next]="(currentHistory$ | async)!.nextArticle.title"
+            [propertyName]="'заголовок'">
+        </app-history-diff>
+        <app-history-diff 
+            [previous]="''" 
+            [next]="(currentHistory$ | async)!.nextArticle.body"
+            [propertyName]="'текст'"
+            [contentType]="'html'">
+        </app-history-diff>
+        <app-history-diff 
+            [previous]="''" 
+            [next]="(currentHistory$ | async)!.nextArticle.imagePath"
+            [propertyName]="'изображение'">
+        </app-history-diff>
+        <app-history-diff 
+            [previous]="''" 
+            [next]="(currentHistory$ | async)!.nextArticle.birth"
+            [propertyName]="'рождение'"
+            [contentType]="'json'">
+        </app-history-diff>
+        <app-history-diff 
+            [previous]="''" 
+            [next]="(currentHistory$ | async)!.nextArticle.death"
+            [propertyName]="'смерть'"
+            [contentType]="'json'">
+        </app-history-diff>
+    }
 }
 @else {
     <!--CASE LAST ARTICLE UPDATE-->
-    @if ((currentHistory$ | async)!.previousArticle.body !== (currentHistory$ | async)!.nextArticle.body) {
-        <ngx-side-by-side-diff
-        class="ngx-diff-light-theme"
-        [before]="htmlToText((currentHistory$ | async)!.previousArticle.body)"
-        [after]="htmlToText((currentHistory$ | async)!.article.body)"
-        [lineContextSize]="4" />
-    }
+    <app-history-diff 
+        [previous]="(currentHistory$ | async)!.previousArticle.title" 
+        [next]="(currentHistory$ | async)!.article.title"
+        [propertyName]="'текст'">
+    </app-history-diff>
+    <app-history-diff 
+        [previous]="(currentHistory$ | async)!.previousArticle.body" 
+        [next]="(currentHistory$ | async)!.article.body"
+        [propertyName]="'текст'"
+        [contentType]="'html'">
+    </app-history-diff>
 
 }
