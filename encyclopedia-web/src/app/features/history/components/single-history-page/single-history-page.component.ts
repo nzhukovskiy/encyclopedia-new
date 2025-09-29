@@ -9,10 +9,13 @@ import { HistoryTypeBadgeComponent } from "../history-type-badge/history-type-ba
 import { MatIcon } from '@angular/material/icon';
 import { HistoryDiffComponent } from "../history-diff/history-diff.component";
 import {ArticlePropertiesHistoryComponent} from '../article-properties-history/article-properties-history.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
+
 
 @Component({
   selector: 'app-single-history-page',
-  imports: [AsyncPipe, UnifiedDiffComponent, SideBySideDiffComponent, RouterLink, HistoryTypeBadgeComponent, DatePipe, MatIcon, HistoryDiffComponent, ArticlePropertiesHistoryComponent],
+  imports: [AsyncPipe, UnifiedDiffComponent, SideBySideDiffComponent, RouterLink, HistoryTypeBadgeComponent, DatePipe, MatIcon, HistoryDiffComponent, ArticlePropertiesHistoryComponent, MatTooltipModule],
   templateUrl: './single-history-page.component.html',
   styleUrl: './single-history-page.component.scss'
 })

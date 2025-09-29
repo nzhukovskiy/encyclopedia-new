@@ -5,12 +5,30 @@
         text-align: center;
     }
 }
-.history-title {
+.history-title-container {
     display: flex;
     justify-content: space-between;
+    gap: 15px;
     align-items: center;
     margin-bottom: 20px;
+
+    .history-title {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+    }
+        
+    .history-nav-link {
+        font-size: 26px;
+    }
 }
+
+
+a:hover {
+    color: rgb(76.5, 162.6, 255);
+}
+
 .user-avatar {
     width: 40px;
     height: 40px;

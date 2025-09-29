@@ -12,10 +12,11 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../../../shared/components/dialog/dialog.component";
 import {filter, switchMap} from "rxjs";
 import {SubmitDialogReturn} from "../../../../shared/constants/submit-dialog-return";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-article-page',
-  imports: [DateWordFormatPipe, ButtonComponent, MatIconModule, AgeFormatPipe],
+  imports: [DateWordFormatPipe, ButtonComponent, MatIconModule, AgeFormatPipe, DatePipe],
   templateUrl: './article-page.component.html',
   styleUrl: './article-page.component.scss'
 })

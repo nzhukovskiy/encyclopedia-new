@@ -77,10 +77,22 @@ export class HistoryService {
             articleId,
             ...projectedHistory}
             = history;
+        const previousHistory = history.previousArticleId ? await this.historyRepository.findOne({
+            where: {
+                nextArticleId: history.previousArticleId
+            }
+        }) : null;
+        const nextHistory = history.nextArticleId ? await this.historyRepository.findOne({
+            where: {
+                previousArticleId: history.nextArticleId
+            }
+        }) : null;
         return {
             ...projectedHistory,
             previousArticle: await this.archivedArticlesService.getById(history.previousArticleId),
             nextArticle: await this.archivedArticlesService.getById(history.nextArticleId),
+            previousHistory: previousHistory,
+            nextHistory: nextHistory,
             article: await this.articleModel.findById(history.articleId)
         };
     }

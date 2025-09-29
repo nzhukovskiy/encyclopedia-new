@@ -1,6 +1,18 @@
-<div class="history-title">
-    <h1>Правка статьи <a [routerLink]="[`/articles/${(currentHistory$ | async)?.article?._id}`]">{{(currentHistory$ | async)?.article?.title}}</a></h1>
-    <app-history-type-badge [actionType]="(currentHistory$ | async)?.actionType"></app-history-type-badge>
+<div class="history-title-container">
+    @if ((currentHistory$ | async)?.previousHistory) {
+        <a [matTooltip]="'Предыдущая правка'" class="history-nav-link" [routerLink]="[`/history/${(currentHistory$ | async)?.previousHistory?.id}`]">
+            <<
+        </a>
+    }
+    <div class="history-title">
+        <h1>Правка статьи <a [routerLink]="[`/articles/${(currentHistory$ | async)?.article?._id}`]">{{(currentHistory$ | async)?.article?.title}}</a></h1>
+        <app-history-type-badge [actionType]="(currentHistory$ | async)?.actionType"></app-history-type-badge>
+    </div>
+    @if ((currentHistory$ | async)?.nextHistory) {
+        <a [matTooltip]="'Следующая правка'" class="history-nav-link" [routerLink]="[`/history/${(currentHistory$ | async)?.nextHistory?.id}`]">
+            >>
+        </a>
+    }
 </div>
 <div class="user-info">
     <div class="user-avatar">

@@ -31,6 +31,9 @@ export class RegisterComponent {
         if (!this.registerFormGroup.invalid) {
             this.registerEvent.emit(this.registerFormGroup.getRawValue())
         }
+        else {
+          this.registerFormGroup.markAllAsTouched();
+        }
     }
 
     protected readonly showErrors = showErrors;

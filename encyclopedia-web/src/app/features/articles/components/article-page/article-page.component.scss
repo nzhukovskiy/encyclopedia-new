@@ -55,3 +55,15 @@
 .image-cell {
     text-align: center;
 }
+.last-history-info {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    justify-content: end;
+
+    .user-info {
+        font-weight: bold;
+        margin-right: 5px;
+        margin-left: 10px;
+    }
+}

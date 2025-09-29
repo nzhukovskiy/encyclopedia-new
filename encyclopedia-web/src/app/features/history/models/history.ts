@@ -4,7 +4,7 @@ import {Article} from '../../articles/models/article';
 
 export class History {
 
-    constructor(id: number, articleId: string, actionDate: Date, actionType: ActionType, previousArticleId: string, nextArticleId: string, user: User, previousArticle: Article, nextArticle: Article, article: Article) {
+    constructor(id: number, articleId: string, actionDate: Date, actionType: ActionType, previousArticleId: string, nextArticleId: string, user: User, previousArticle: Article, nextArticle: Article, previousHistory: History, nextHistory: History, article: Article) {
         this.id = id;
         this.articleId = articleId;
         this.actionDate = actionDate;
@@ -14,6 +14,8 @@ export class History {
         this.user = user;
         this.previousArticle = previousArticle;
         this.nextArticle = nextArticle;
+        this.previousHistory = previousHistory;
+        this.nextHistory = nextHistory;
         this.article = article;
     }
 
@@ -26,5 +28,7 @@ export class History {
     user: User;
     previousArticle: Article;
     nextArticle: Article;
+    previousHistory: History;
+    nextHistory: History;
     article: Article;
 }

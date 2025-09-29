@@ -57,14 +57,13 @@ export class ArticlesService {
         ).lean();
         return {
             ...model,
-            lastHistory: await this.historyRepository.find({
+            lastHistory: await this.historyRepository.findOne({
                 where: {
                     articleId: articleId
                 },
                 order: {
                     actionDate: 'desc'
                 },
-                take: 1,
                 relations: {
                     user: true
                 }

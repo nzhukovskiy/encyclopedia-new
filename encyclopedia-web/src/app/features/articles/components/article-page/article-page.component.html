@@ -13,6 +13,9 @@
         </app-button>
     </div>
 </div>
+<div class="last-history-info">
+    <mat-icon>history</mat-icon><span class="user-info">{{article?.lastHistory?.user?.firstName}} {{article?.lastHistory?.user?.lastName}}</span><span>{{article?.lastHistory?.actionDate | date:"d.LL.y в H:mm"}}</span>
+</div>
 @if (article?.imagePath) {
     <table class="article-table">
         <tr>
