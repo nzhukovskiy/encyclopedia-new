@@ -61,7 +61,7 @@ export class HistoryDiffComponent {
             .join('\n');
     }
 
-    shouldShowDiff(): boolean {
+    get shouldShowDiff(): boolean {
         const prev = this.normalizeEmptyValue(this.previous);
         const next = this.normalizeEmptyValue(this.next);
 

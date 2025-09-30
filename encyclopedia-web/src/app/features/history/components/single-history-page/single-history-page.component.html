@@ -43,9 +43,14 @@
     }
 }
 @else {
-    <!--CASE LAST ARTICLE UPDATE-->
-    <app-article-properties-history 
-        [previousArticle]="(currentHistory$ | async)!.previousArticle"
-        [nextArticle]="(currentHistory$ | async)!.article">
-    </app-article-properties-history>
+    @if ((currentHistory$ | async)!.previousArticle) {
+        <!--CASE LAST ARTICLE UPDATE-->
+        <app-article-properties-history 
+            [previousArticle]="(currentHistory$ | async)!.previousArticle"
+            [nextArticle]="(currentHistory$ | async)!.article">
+        </app-article-properties-history>
+    }
+    @else {
+        <h2>Просмотр подробностей для данной правки не</h2>
+    }
 }

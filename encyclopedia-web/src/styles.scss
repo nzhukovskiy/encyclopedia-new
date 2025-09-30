@@ -13,6 +13,9 @@ body {
     padding: 0;
     margin: 0;
 }
+.mat-mdc-paginator, .mdc-list-item {
+    font-family: unset !important;
+}
 a {
     color: inherit;
     text-decoration: none;

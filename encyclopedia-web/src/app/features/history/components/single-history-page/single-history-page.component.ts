@@ -21,7 +21,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class SingleHistoryPageComponent implements OnInit {
 
-    currentHistory$ = new Observable<History|null>;
+    readonly currentHistory$ = new Observable<History|null>;
 
     constructor(private readonly route: ActivatedRoute,
                 protected readonly historyService: HistoryService) {
