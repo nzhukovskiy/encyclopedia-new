@@ -17,6 +17,28 @@ export class HistoryApiService {
     }
 
     getForArticle(articleId: string, historyFilterParams?: HistoryFilterParams) {
+        const params = this.setFilterParams(historyFilterParams);
+        return this.httpClient.get<any>(`articles/${articleId}/history`, {params}).pipe(
+            map((x) => this.paginationAdapterService.adaptTypeOrmResponse<History>(x))
+        );
+    }
+
+    getSingleHistory(historyId: number) {
+        return this.httpClient.get<History>(`history/${historyId}`);
+    }
+
+    getForCurrentUser(historyFilterParams?: HistoryFilterParams) {
+        const params = this.setFilterParams(historyFilterParams);
+        return this.httpClient.get<History[]>(`history`, {params}).pipe(
+            map((x) => this.paginationAdapterService.adaptTypeOrmResponse<History>(x))
+        );
+    }
+
+    getForUser(userId: number) {
+        return this.httpClient.get<History[]>(`history`);
+    }
+
+    private setFilterParams(historyFilterParams?: HistoryFilterParams) {
         let params = new HttpParams();
         if (historyFilterParams) {
             if (historyFilterParams.pagination) {
@@ -27,12 +49,6 @@ export class HistoryApiService {
                 params = params.append("sortBy", historyFilterParams.sortBy);
             }
         }
-        return this.httpClient.get<any>(`articles/${articleId}/history`, {params}).pipe(
-            map((x) => this.paginationAdapterService.adaptTypeOrmResponse<History>(x))
-        );
-    }
-
-    getSingleHistory(historyId: number) {
-        return this.httpClient.get<History>(`history/${historyId}`);
+        return params;
     }
 }

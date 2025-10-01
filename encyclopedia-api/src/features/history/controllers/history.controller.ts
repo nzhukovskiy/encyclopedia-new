@@ -1,6 +1,7 @@
 import {Controller, Get, Param, Request} from '@nestjs/common';
 import {HistoryService} from "../services/history.service";
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
+import {Paginate, PaginateQuery} from "nestjs-paginate";
 
 @ApiTags('history')
 @ApiBearerAuth()
@@ -9,8 +10,8 @@ export class HistoryController {
     constructor(private readonly historyService: HistoryService) {
     }
     @Get()
-    getForUser(@Request() request) {
-        return this.historyService.getForUser(request.user.id);
+    getForUser(@Request() request, @Paginate() query: PaginateQuery) {
+        return this.historyService.getForUser(request.user.id, query);
     }
 
     @Get(':id')

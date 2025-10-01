@@ -42,6 +42,11 @@ export const routes: Routes = [
         resolve: {history: historyResolver}
     },
     {
+        path: "profile",
+        loadComponent: () => import('./features/users/components/profile/profile.component').then(c => c.ProfileComponent),
+        canActivate: [authGuard],
+    },
+    {
         path: "",
         loadComponent: () => import('./features/articles/components/all-articles/all-articles.component').then(c => c.AllArticlesComponent),
         canActivate: [authGuard]

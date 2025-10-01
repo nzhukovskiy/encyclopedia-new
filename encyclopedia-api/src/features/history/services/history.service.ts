@@ -17,25 +17,25 @@ export class HistoryService {
                 private readonly archivedArticlesService: ArchivedArticlesService) {
     }
 
-    async getForUser(userId: number) {
-        return Promise.all((await this.userRepository.findOne({
-            where: {
-                id: userId
-            },
-            relations: {
-                histories:true
-            }
-        })).histories.map(
-            async ({previousArticleId, nextArticleId, ...el}) =>
-            {
-                let articleId = el.articleId;
-                delete el.articleId;
-                return {
-                    ...el,
-                    article: await this.articleModel.findById(articleId)
-                };
-            })
-        );
+    async getForUser(userId: number, query: PaginateQuery) {
+        let historiesQuery = this.historyRepository.createQueryBuilder('history')
+            .where('history.userId = :userId', { userId });
+        const result = await paginate(query, historiesQuery, {
+            sortableColumns: ['actionDate'],
+            defaultSortBy: [['actionDate', 'DESC']],
+        });
+
+        const articleIds = result.data.map(x => x.articleId);
+        const articles = await this.articleModel.find({_id: {$in: articleIds}});
+        result.data = result.data.map(history => {
+            let articleId = history.articleId;
+            delete history.articleId;
+            return {
+                ...history,
+                article: articles.find(x => x._id.toString() === articleId)
+            };
+        })
+        return result;
     }
 
     async getForArticle(articleId: string, query: PaginateQuery) {
@@ -50,17 +50,6 @@ export class HistoryService {
         result.data = result.data.map(({ previousArticleId, nextArticleId, articleId, ...el }) => el as History);
 
         return result;
-        // return Promise.all((await this.historyRepository.find({
-        //     where: {
-        //         articleId: articleId
-        //     },
-        //     relations: {
-        //         user: true
-        //     }
-        // })).map(({previousArticleId,
-        //               nextArticleId,
-        //               articleId,
-        //               ...el}) => el))
     }
 
     async get(historyId: number) {

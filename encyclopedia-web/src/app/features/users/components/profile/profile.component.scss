@@ -1,0 +1,14 @@
+div {
+    margin: 15px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &.email {
+        font-weight: bold;
+    }
+}
+
+h2 {
+    margin: 30px 0;
+}

@@ -1,0 +1,15 @@
+<h1>Профиль пользователя</h1>
+<div><mat-icon>person</mat-icon>{{(authService.currentUser | async)?.firstName}} {{(authService.currentUser | async)?.lastName}}</div>
+<div class="email"><mat-icon>email</mat-icon>{{(authService.currentUser | async)?.email}}</div>
+<div><mat-icon>history</mat-icon>Присоединился {{(authService.currentUser | async)?.registeredAt | date:"d.LL.y в H:mm"}}</div>
+<h2>История действий</h2>
+@for (history of (historyService.historyForUser | async)?.data; track $index) {
+    <div>{{history.actionDate}}</div>
+}
+<mat-paginator [length]="(historyService.historyForUser | async)?.pagination?.total"
+               [pageIndex]="(historyService.historyForUser | async)?.pagination?.page"
+               [pageSize]="(historyService.historyForUser | async)?.pagination?.limit"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               (page)="handlePageChange($event)"
+               aria-label="Select page">
+</mat-paginator>

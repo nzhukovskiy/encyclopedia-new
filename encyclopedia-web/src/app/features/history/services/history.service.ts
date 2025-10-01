@@ -22,6 +22,16 @@ export class HistoryService {
     });
     history = this.$history.asObservable();
 
+    private $historyForUser = new BehaviorSubject<PaginationResult<History>>({
+        data: [],
+        pagination: {
+            total: 0,
+            limit: 0,
+            page: 0
+        }
+    });
+    historyForUser = this.$historyForUser.asObservable();
+
     private $currentHistory = new BehaviorSubject<History | null>(null);
     currentHistory = this.$currentHistory.asObservable();
 
@@ -37,5 +47,14 @@ export class HistoryService {
 
     setCurrentHistory(history: History) {
         this.$currentHistory.next(history);
+    }
+
+    loadHistoryForCurrentUser(historyFilterParams?: HistoryFilterParams, forceReload = false) {
+        if (this.$historyForUser.value.data.length && !forceReload) {
+            return;
+        }
+        this.historyApiService.getForCurrentUser(historyFilterParams).subscribe(history => {
+            this.$historyForUser.next(history);
+        })
     }
 }
