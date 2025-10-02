@@ -1,13 +1,13 @@
 <div class="history-title">
     <h1>
-        История правок
+        {{title}}
     </h1>
     <select class="form-select" [formControl]="sortBy">
         <option [value]="'actionDate:DESC'">Сначала новые</option>
         <option [value]="'actionDate:ASC'">Сначала старые</option>
     </select>
 </div>
-<div class="all-history">
+<!-- <div class="all-history">
     @for (historyRecord of (historyService.history | async)?.data; track $index) {
         <a [routerLink]="[`/history/${historyRecord.id}`]" class="history-card" [ngClass]="'action-' + historyRecord.actionType.toLowerCase()">
             <div class="right-line">
@@ -43,4 +43,5 @@
                [pageSizeOptions]="[5, 10, 25, 100]"
                (page)="handlePageChange($event)"
                aria-label="Select page">
-</mat-paginator>
+</mat-paginator> -->
+<app-history-list [type]="type" [history]="history"></app-history-list>

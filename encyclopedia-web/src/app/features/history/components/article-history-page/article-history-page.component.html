@@ -1,0 +1,1 @@
+<app-article-history [title]="'История правок'" [history]="historyService.history | async" (loadHistory)="loadHistory($event)"></app-article-history>

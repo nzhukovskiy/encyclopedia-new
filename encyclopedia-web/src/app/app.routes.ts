@@ -26,7 +26,7 @@ export const routes: Routes = [
     },
     {
         path: "articles/:id/history",
-        loadComponent: () => import('./features/history/components/article-history/article-history.component').then(c => c.ArticleHistoryComponent),
+        loadComponent: () => import('./features/history/components/article-history-page/article-history-page.component').then(c => c.ArticleHistoryPageComponent),
         canActivate: [authGuard]
     },
     {

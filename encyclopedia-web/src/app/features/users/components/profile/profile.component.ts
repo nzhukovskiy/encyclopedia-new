@@ -9,14 +9,15 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {HistoryFilterParams} from '../../../history/models/history-filter-params';
 import {ActionType} from '../../../history/constants/action-type';
 import {FormControl} from '@angular/forms';
+import { ArticleHistoryComponent } from '../../../history/components/article-history/article-history.component';
 
 @Component({
     selector: 'app-profile',
-    imports: [AsyncPipe, MatIconModule, DatePipe, MatPaginator],
+    imports: [AsyncPipe, MatIconModule, DatePipe, MatPaginator, ArticleHistoryComponent],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
     constructor(private readonly router: Router,
                 private readonly route: ActivatedRoute,
@@ -26,45 +27,51 @@ export class ProfileComponent implements OnInit {
 
     history: History[] = [];
 
-    sortBy = new FormControl<string | null>(null);
+    // sortBy = new FormControl<string | null>(null);
 
-    protected readonly actionType = ActionType;
+    // protected readonly actionType = ActionType;
 
-    ngOnInit(): void {
-        this.route.paramMap.subscribe(params => {
-            this.route.queryParams.subscribe(queryParams => {
-                const page = queryParams['page'] || 0;
-                const limit = queryParams['limit'] || 10;
-                const sortBy = queryParams['sortBy'] || 'actionDate:DESC';
-                this.sortBy.patchValue(sortBy, {emitEvent: false});
-                this.historyService.loadHistoryForCurrentUser(
-                    new HistoryFilterParams(sortBy, {
-                        page: parseInt(page) + 1,
-                        limit: limit,
-                        total: 0
-                    }),
-                    true);
-            });
-        })
-        this.sortBy.valueChanges.subscribe(val => this.handleSortChange(val!));
+    // ngOnInit(): void {
+    //     this.route.paramMap.subscribe(params => {
+    //         this.route.queryParams.subscribe(queryParams => {
+    //             const page = queryParams['page'] || 0;
+    //             const limit = queryParams['limit'] || 10;
+    //             const sortBy = queryParams['sortBy'] || 'actionDate:DESC';
+    //             this.sortBy.patchValue(sortBy, {emitEvent: false});
+    //             this.historyService.loadHistoryForCurrentUser(
+    //                 new HistoryFilterParams(sortBy, {
+    //                     page: parseInt(page) + 1,
+    //                     limit: limit,
+    //                     total: 0
+    //                 }),
+    //                 true);
+    //         });
+    //     })
+    //     this.sortBy.valueChanges.subscribe(val => this.handleSortChange(val!));
+    // }
+
+    loadHistory(data: {id: string | null, params: HistoryFilterParams}) {
+        this.historyService.loadHistoryForCurrentUser(
+            data.params,
+            true);
     }
 
-    handlePageChange(event: PageEvent) {
-        this.router.navigate([], {
-            queryParams: {
-                page: event.pageIndex,
-                limit: event.pageSize
-            },
-            queryParamsHandling: 'merge',
-        }).then();
-    }
+    // handlePageChange(event: PageEvent) {
+    //     this.router.navigate([], {
+    //         queryParams: {
+    //             page: event.pageIndex,
+    //             limit: event.pageSize
+    //         },
+    //         queryParamsHandling: 'merge',
+    //     }).then();
+    // }
 
-    handleSortChange(sortBy: string) {
-        this.router.navigate([], {
-            queryParams: {
-                sortBy: sortBy,
-            },
-            queryParamsHandling: 'merge',
-        }).then();
-    }
+    // handleSortChange(sortBy: string) {
+    //     this.router.navigate([], {
+    //         queryParams: {
+    //             sortBy: sortBy,
+    //         },
+    //         queryParamsHandling: 'merge',
+    //     }).then();
+    // }
 }
